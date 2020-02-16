@@ -1,0 +1,9 @@
+package com.ikpb.users;
+
+import com.ikpb.pojo.User;
+
+public class Customers{
+	private String firstName;
+	
+
+}

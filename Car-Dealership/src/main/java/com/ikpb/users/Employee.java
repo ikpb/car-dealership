@@ -1,0 +1,43 @@
+package com.ikpb.users;
+
+import com.ikpb.pojo.User;
+import com.ikpb.pojo.User.UserType;
+
+public class Employee extends User{
+	//view payments
+		private int viewAllPayments() {
+			return 0;
+		}
+		//view cars on a lot
+		public String viewCarsOnLot() {
+			return null;
+		}
+		//make an offer on a care
+		public int addCarToLot() {
+			return 0;
+		}
+		public boolean removeCarFromLot() {
+			return false;
+		}
+		
+		
+
+		public Employee(String firstName, String lastName, int age, UserType user) {
+			this();
+			setFirstName(firstName);
+			setLastName(lastName);
+			setAge(age);
+			setUserType(user);
+			
+			
+		}
+		public Employee() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+		public Employee(String firstName, String lastName, int age, String email, String password,
+				UserType UserClassification) {
+			super(firstName, lastName, age, email, password, UserClassification);
+			// TODO Auto-generated constructor stub
+		}
+}

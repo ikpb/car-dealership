@@ -1,0 +1,47 @@
+package com.ikpb.driver;
+import com.ikpb.register.*;
+import java.util.Scanner;
+
+public class RegistrationDriver {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		int userOption = 0;
+		while(userOption == 0) {
+		
+		System.out.println("Welcome to King's AutoMall!");
+		System.out.println("What whould you like to do?");
+		System.out.println("Choose from the options below: (1-4)");
+		System.out.println("1:Login as Customer");
+		System.out.println("2:Login as Employee");
+		System.out.println("3:Register with US");
+		System.out.println("4:Quit");
+		userOption = scanner.nextInt();
+		
+		if(userOption == 1) {
+			//log in as customer
+		}else if(userOption == 2) {
+			//log in as employee
+		}else if(userOption == 3) {
+			//register user
+			RegisterUser register = new RegisterUser();
+			 register.RegisterUser();
+			 userOption = 0;
+		}else if(userOption == 4) {
+			//exit system
+			System.out.println("Thank you for visiting us today!");
+		}else {
+		System.out.println("Would you like to stay?(1:No, 2:Yes");
+			userOption = scanner.nextInt();
+		if(userOption == 1) {
+			System.out.println("Goodbye");	
+		}
+		else if(userOption == 2) {
+			System.out.println("Awesome let's try this again!");
+			userOption = 0;
+		}
+		}
+		}scanner.close();
+		
+		 
+	 }
+}

@@ -1,0 +1,7 @@
+package com.ikpb.pojo;
+
+public interface Persons {
+private String firstName;
+private String lastName;
+private int age;
+}

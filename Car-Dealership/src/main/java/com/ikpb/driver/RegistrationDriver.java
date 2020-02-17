@@ -1,4 +1,5 @@
 package com.ikpb.driver;
+import com.ikpb.login.Login;
 import com.ikpb.register.*;
 import java.util.Scanner;
 
@@ -21,10 +22,12 @@ public class RegistrationDriver {
 			//log in as customer
 		}else if(userOption == 2) {
 			//log in as employee
+			Login employeeLogin = new Login();
+			employeeLogin.LoggingIn();
 		}else if(userOption == 3) {
 			//register user
 			RegisterUser register = new RegisterUser();
-			 register.RegisterUser();
+			 register.RegisterUsers();
 			 userOption = 0;
 		}else if(userOption == 4) {
 			//exit system

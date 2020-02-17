@@ -8,7 +8,7 @@ public class User {
 	private String lastName;
 	private int age;
 	private String email;
-	private String password;
+	static String password;
 	private UserType userType;
 	public String getFirstName() {
 		return firstName;
@@ -61,7 +61,7 @@ public class User {
 		return userData.toString() ;
 	
 	}public String logInInfo() {
-		return "Username: " + email + "Password: your provided password";
+		return "Username: " + email + "Password: " + password;
 	}
 //	public User(String firstName, String lastName, int age, String email, String password) {
 //		super();

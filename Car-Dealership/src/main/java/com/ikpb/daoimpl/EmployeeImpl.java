@@ -12,11 +12,78 @@ import java.util.List;
 import com.ikpb.pojo.User;
 public class EmployeeImpl implements EmployeeDAO{
 	public void createEmployee(Employee user){
+		String filename;
+		filename = user.getEmail() + ".dat";
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		try {
+			fos = new FileOutputStream(filename, true);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject((Employee) user);
+			System.out.println(user);
+		} catch (FileNotFoundException e)+
+		{
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-	public Employee getEmployeeByEmail(String email, String password) {
-		return null;
+	public boolean getEmployeeByEmail(Employee user) {
+		String filename;
+		filename =  "1234@1234.dat";
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		Employee em = null;
+		boolean results = false;
+		try {
+			fis = new FileInputStream(filename);
+			ois = new ObjectInputStream(fis);
+			try {
+				em =  (Employee) ois.readObject();
+				 if(user.getEmail().equals(em.getEmail())) {
+					 System.out.println("User is here!");
+					 results = true;
+				 }else{System.out.println("User not found");
+				System.out.println(em);
+				System.out.println(user);
+				 results = false;}
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ois.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fis.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return results;
 	}
 	public void saveEmployee(Employee employee) {}
 	public void deleteEmployee(Employee employee) {}
+
+
 
 }

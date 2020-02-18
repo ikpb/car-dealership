@@ -1,0 +1,12 @@
+2020-02-17 16:23:59 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 16:24:33 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 16:29:01 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 16:29:40 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 16:33:34 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 16:34:21 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 17:11:51 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 17:12:42 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 17:13:03 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 17:13:23 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-17 17:13:49 DEBUG CarDriver:15 - Log4j appender configuration is successful
+2020-02-18 06:03:28 DEBUG CarDriver:15 - Log4j appender configuration is successful

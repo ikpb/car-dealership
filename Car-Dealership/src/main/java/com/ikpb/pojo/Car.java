@@ -1,11 +1,55 @@
 package com.ikpb.pojo;
 
-public class Car {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ikpb.users.Customers;
+
+public class Car implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3181062708322226377L;
 	//private fields
 	private String make;
+	@Override
+	public String toString() {
+		return this.getId() + " Car Make:" + make + ", Model:" + model + ", Year:" + year + ", Cost:" + cost + ", Offers:" + offers + userName_;
+	}
+	
+	
 	private String model;
 	private int year;
 	private int cost;
+	private static int id =0;
+	private int carId;
+	public int offer;
+	private List<String> userName_;
+	public List<String> userName = new ArrayList<String>();;
+	public List<Integer> offers = new ArrayList<Integer>();
+	public List<Integer> getOffer() {
+		return offers;
+	}
+	public void setOffer(int offer) {
+		this.offers.add(offer);
+	}
+	
+	public List<String> getUserName_() {
+		return userName;
+	}
+	public void setUserName_(List<String> userName_) {
+		this.userName_ = userName_;
+	}
+	public List<String> getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName_) {
+		this.userName.add(userName_);
+	}
+	public void addOffer(int offers) {
+		this.offers.add(offers);
+	}
 	public String getMake() {
 		return make;
 	}
@@ -30,6 +74,15 @@ public class Car {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
+	public int getId() {
+		return carId;
+	}
+	private void setID() {
+		id++;
+		this.carId = id;
+	}
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -69,12 +122,34 @@ public class Car {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Car(String make, String model, int year, int cost) {
+	public Car(String make, String model, int year, int cost, List<Integer> offers) {
 		super();
 		this.make = make;
 		this.model = model;
 		this.year = year;
 		this.cost = cost;
+		this.offers = offers;
+		setID();
+		
+	}public Car(String make, String model, int year, int cost,int offers, String userName, int id){
+		super();
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		this.cost = cost;
+		this.offers.add(offers);
+		this.userName.add(userName);
+		this.carId = id;
+	}public Car(String make, String model, int year, int cost,List<Integer> offers, List<String> userName, int id){
+		super();
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		this.cost = cost;
+		this.userName_ = userName;
+		this.offers = offers;
+	
+		this.carId = id;
 	}
 	
 }

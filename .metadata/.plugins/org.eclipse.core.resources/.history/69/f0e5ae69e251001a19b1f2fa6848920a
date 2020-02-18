@@ -1,0 +1,63 @@
+package com.ikpb.driver;
+import com.ikpb.login.Login;
+import com.ikpb.pojo.User;
+import com.ikpb.register.*;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import com.ikpb.daoimpl.UserImpl;
+import com.ikpb.daoimpl.CarImpl;
+import com.ikpb.pojo.Car;
+import com.ikpb.pojo.User;
+public class RegistrationDriver {
+	public static void main(String[] args) {
+		ArrayList<User> users = new ArrayList<User>();
+		CarImpl car = new CarImpl();
+		UserImpl user = new UserImpl();
+		ArrayList<Car> cars = new ArrayList<Car>();
+		Scanner scanner = new Scanner(System.in);
+		Login loggingIn = new Login();
+		int userOption = 0;
+		while(userOption == 0) {
+		
+		System.out.println("Welcome to King's AutoMall!");
+		System.out.println("What whould you like to do?");
+		System.out.println("Choose from the options below: (1-4)");
+		System.out.println("1:Login as Customer");
+		System.out.println("2:Login as Employee");
+		System.out.println("3:Register with US");
+		System.out.println("4:Quit");
+		userOption = scanner.nextInt();
+		
+		if(userOption == 1) {
+			//log in as customer
+			while(!loggingIn.LoggingIn()) {
+				System.out.println("Please enter vaild credentials");
+			}
+		}else if(userOption == 2) {
+			//log in as employee
+
+		}else if(userOption == 3) {
+			user.addUser();
+			user.saveUSer();
+			user.getUserList();
+			userOption = 0;
+		}else if(userOption == 4) {
+			//exit system
+			System.out.println("Thank you for visiting us today!");
+		}else {
+		System.out.println("Would you like to stay?(1:No, 2:Yes");
+			userOption = scanner.nextInt();
+		if(userOption == 1) {
+			System.out.println("Goodbye");	
+		}
+		else if(userOption == 2) {
+			System.out.println("Awesome let's try this again!");
+			userOption = 0;
+		}
+		}
+		}scanner.close();
+		
+		 
+	 }
+}

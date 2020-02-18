@@ -1,0 +1,32 @@
+package com.ikpb.login;
+
+import java.util.Scanner;
+
+import com.ikpb.daoimpl.UserImpl;
+import com.ikpb.pojo.User;
+import com.ikpb.pojo.User.UserType;
+import com.ikpb.users.Employee;
+public class Login {
+//take in user input
+	public boolean LoggingIn(){
+		Scanner input = new Scanner(System.in);
+		UserImpl user = new UserImpl();
+		User use = new User();
+		boolean logInInfo = false;
+		//init user class
+		System.out.println("Please enter your Username (email):");
+		String email = input.nextLine();
+		System.out.println("Please enter your Password:");
+		String password = input.nextLine();
+		String info = use.logInInfo(email, password);
+		String [] passprotect = info.split(" ");
+		if(email.equals(passprotect[0]) && password.equals(passprotect[1])) {
+			logInInfo = true;
+			System.out.println("Great to have you back!");
+		}else {
+			System.out.println("Sorry Please try again.");
+			logInInfo = false;
+		} return logInInfo;
+	}
+}
+

@@ -1,0 +1,57 @@
+package com.ikpb.daoimpl;
+
+import com.ikpb.dao.CarDao;
+import com.ikpb.pojo.Car;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class CarImpl implements CarDao{
+
+	List<Car> cars = new ArrayList<Car>();
+	public CarImpl() {
+			
+	}
+	
+	@Override
+	public List<Car> getAllCars() {
+		
+		return cars;
+	}
+
+	@Override
+	public Car updateCar(int id) {
+		
+		return cars.get(id);
+	}
+
+	@Override
+	public void addCar() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter the make of the Car: ");
+		String make = scan.nextLine();
+		System.out.println("Enter the model of the Car: ");
+		String model = scan.nextLine();
+		System.out.println("Enter the year of the Car: ");
+		int year = scan.nextInt();
+		System.out.println("Enter the cost of the Car: ");
+		int cost = scan.nextInt();
+		scan.hasNextLine();
+		System.out.println("Is there an offer made on the car?");
+		int offer = scan.nextInt();
+		List<Integer> offers = new ArrayList<Integer>();
+		offers.add(offer);
+		Car car = new Car(make,model,year,cost,offers);
+		cars.add(car);
+		
+	}
+
+	@Override
+	public void deleteCar(Car car) {
+		cars.remove(car.getId());
+		System.out.println("Car with Id:" + car.getId() + ", deleted from database");
+	}
+	
+
+}

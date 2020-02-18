@@ -1,0 +1,117 @@
+package com.ikpb.pojo;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class Car implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3181062708322226377L;
+	//private fields
+	private String make;
+	@Override
+	public String toString() {
+		return carId + " Car [make=" + make + ", model=" + model + ", year=" + year + ", cost=" + cost + ", offers=" + offers
+				+ "]";
+	}
+	private String model;
+	private int year;
+	private int cost;
+	private static int id =0;
+	private int carId;
+	private int offer;
+	private List<Integer> offers;
+	
+	public List<Integer> getOffer() {
+		return offers;
+	}
+	public void setOffer(List<Integer> offers) {
+		this.offers = offers;
+	}
+	public String getMake() {
+		return make;
+	}
+	public void setMake(String make) {
+		this.make = make;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
+	}
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
+	public int getCost() {
+		return cost;
+	}
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	public int getId() {
+		return carId;
+	}
+	private void setID() {
+		id=id+1;
+		this.carId = id;
+	}
+	
+	public void setOffer(int offer) {
+		this.offer = offer;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + cost;
+		result = prime * result + ((make == null) ? 0 : make.hashCode());
+		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + year;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Car other = (Car) obj;
+		if (cost != other.cost)
+			return false;
+		if (make == null) {
+			if (other.make != null)
+				return false;
+		} else if (!make.equals(other.make))
+			return false;
+		if (model == null) {
+			if (other.model != null)
+				return false;
+		} else if (!model.equals(other.model))
+			return false;
+		if (year != other.year)
+			return false;
+		return true;
+	}
+	public Car() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Car(String make, String model, int year, int cost, List<Integer> offers) {
+		super();
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		this.cost = cost;
+		this.offers = offers;
+		this.carId = getId();
+		
+	}
+	
+}

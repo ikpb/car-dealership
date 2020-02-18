@@ -1,0 +1,17 @@
+package com.ikpb.driver;
+
+import com.ikpb.daoimpl.CarImpl;
+import com.ikpb.pojo.Car;
+
+public class CarDriver {
+
+	public static void main(String[] args) {
+		CarImpl cars = new CarImpl();
+		cars.getAllCars();
+		cars.addCar();
+		cars.getAllCars();
+		cars.addCar();
+		cars.getAllCars();
+	}
+
+}

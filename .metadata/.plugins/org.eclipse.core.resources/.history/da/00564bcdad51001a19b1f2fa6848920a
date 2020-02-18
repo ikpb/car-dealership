@@ -1,0 +1,14 @@
+package com.ikpb.dao;
+import com.ikpb.pojo.Car;
+import com.ikpb.pojo.Customer;
+
+import java.util.List;
+
+public interface CarDao {
+	List<Car> getCarsList();
+	public void makeOffer();
+	public void addCar();
+	public void deleteCar();
+	public void saveCarList();
+
+}

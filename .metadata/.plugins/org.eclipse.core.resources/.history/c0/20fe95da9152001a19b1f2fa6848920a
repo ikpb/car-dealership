@@ -17,21 +17,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CarImpl implements CarDao{
-	
-	public static void MyListStored() {
 
 	ArrayList<Car> cars = new ArrayList<Car>();
 	ArrayList<Car> carOffers = new ArrayList<Car>();
 	ArrayList<Customers> customers = new ArrayList<Customers>();
 	ArrayList<Customers> acceptedOffers = new ArrayList<Customers>();
-	}
 	public CarImpl() {
 		
 	}
 	
 	@Override
 	public List<Car> getCarsListInitial() {
-		Car car = new Car();
 		String filename;
 		filename = "car.dat";
 		FileInputStream fis = null;
@@ -241,9 +237,5 @@ public class CarImpl implements CarDao{
 		System.out.println(carOffers);
 		return carOffers;
 	}
-}
 
-	
-	
-	
-	
+}

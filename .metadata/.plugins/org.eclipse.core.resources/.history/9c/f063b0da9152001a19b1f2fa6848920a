@@ -1,30 +1,29 @@
 package com.ikpb.driver;
+import com.ikpb.login.Login;
+import com.ikpb.pojo.User;
+import com.ikpb.pojo.User.UserType;
+import com.ikpb.users.Customers;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.LogManager;
-import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.Logger;
 
-import com.ikpb.daoimpl.CarImpl;
 import com.ikpb.daoimpl.UserImpl;
-import com.ikpb.login.Login;
+import com.ikpb.daoimpl.CarImpl;
 import com.ikpb.pojo.Car;
+import com.ikpb.pojo.Customer;
 import com.ikpb.pojo.User;
-import com.ikpb.pojo.User.UserType;
 public class RegistrationDriver {
-	private static final Logger logger = Logger.getLogger(RegistrationDriver.class);
 	public static void main(String[] args) throws InterruptedException {
-		
 		ArrayList<User> users = new ArrayList<User>();
 		CarImpl car = new CarImpl();
 		UserImpl user = new UserImpl();
 		ArrayList<Car> cars = new ArrayList<Car>();
+		car.getCarsListInitial();
+		car.getOfferList();
 		Scanner scanner = new Scanner(System.in);
 		Login loggingIn = new Login();
-		logger.info("Object lists created");
 		int userOption = 0;
-		
 		while(userOption == 0) {
 		
 		System.out.println("Welcome to King's AutoMall!");
@@ -35,7 +34,7 @@ public class RegistrationDriver {
 		System.out.println("3:Register with US");
 		System.out.println("4:Quit");
 		userOption = scanner.nextInt();
-		logger.info("taking user input");
+		
 		if(userOption == 1) {
 			//log in as customer
 			int count=0;
@@ -50,14 +49,12 @@ public class RegistrationDriver {
 			System.out.println("Customer: " + b.getFirstName() + " is now logged in!");
 			System.out.println("Choose from the options below: (1-4)");
 			while(userOption ==0) {
-				logger.info("Enter while loop of the customer user interface.");
 			System.out.println("1:View Cars on Lot");
 			System.out.println("2:Make an Offer on a Car");
 			System.out.println("3:View Remaining Payments");
 			System.out.println("4: Exit");
 			userOption = scanner.nextInt();
 			if(userOption == 1) {
-				logger.debug("getting the first pull of the car list.");
 				car.getCarsList();
 				TimeUnit.MILLISECONDS.sleep(7000);
 				userOption = 0;
@@ -70,6 +67,8 @@ public class RegistrationDriver {
 				scanner.nextLine();
 				car.makeOffer(b.getFirstName(), offerAmount, CarId);
 				userOption = 0;
+				car.saveOffers();
+				car.getCarsList();
 			}else if(userOption == 3) {
 				
 			}else if(userOption ==4) {

@@ -35,7 +35,7 @@ public class RegistrationDriver {
 		System.out.println("3:Register with US");
 		System.out.println("4:Quit");
 		userOption = scanner.nextInt();
-		logger.info("taking user input");
+		
 		if(userOption == 1) {
 			//log in as customer
 			int count=0;
@@ -50,14 +50,12 @@ public class RegistrationDriver {
 			System.out.println("Customer: " + b.getFirstName() + " is now logged in!");
 			System.out.println("Choose from the options below: (1-4)");
 			while(userOption ==0) {
-				logger.info("Enter while loop of the customer user interface.");
 			System.out.println("1:View Cars on Lot");
 			System.out.println("2:Make an Offer on a Car");
 			System.out.println("3:View Remaining Payments");
 			System.out.println("4: Exit");
 			userOption = scanner.nextInt();
 			if(userOption == 1) {
-				logger.debug("getting the first pull of the car list.");
 				car.getCarsList();
 				TimeUnit.MILLISECONDS.sleep(7000);
 				userOption = 0;

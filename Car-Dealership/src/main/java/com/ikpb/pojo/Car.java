@@ -2,10 +2,9 @@ package com.ikpb.pojo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import com.ikpb.daoimpl.Offers;
-import com.ikpb.users.Customers;
+import java.util.Map;
 
 public class Car implements Serializable{
 	/**
@@ -28,25 +27,35 @@ public class Car implements Serializable{
 	private double acceptedOffer;
 	private double payment;
 	private double remainingBalance;
-	public List<Customer> offers = new ArrayList<Customer>();//make a list of customer objects in 
+	private boolean isCarAvaliable;
+	public Map<User, Double> offers = new HashMap<User,Double>();//make a list of customer objects in 
 	
 	public List<Double> paymentsMade = new ArrayList<>();
 	public List<Double> getPaymentsMade() {
 		return paymentsMade;
 	}
 
-	public void setPaymentsMade(List<Double> paymentsMade) {
-		this.paymentsMade = paymentsMade;
+	public Map<User, Double> getOffers() {
+		return offers;
 	}
 
-	public List<Customer> getOffer() {
-		return offers;
+	public void setOffers(Map<User, Double> offers) {
+		this.offers = offers;
+	}
+	public void addOffer(User email, Double offer) {
+		this.offers.put(email, offer);
+	}
+	public void clearOffers() {
+		this.offers.clear();
+	}
+
+	public void setPaymentsMade(List<Double> paymentsMade) {
+		this.paymentsMade = paymentsMade;
 	}
 	
 	public double getAcceptedOffer() {
 		return acceptedOffer;
 	}
-
 	public void setAcceptedOffer(double acceptedOffer) {
 		this.acceptedOffer = acceptedOffer;
 	}
@@ -60,8 +69,12 @@ public class Car implements Serializable{
 		this.remainingBalance = this.makePayment();
 	}
 
-	public void setOffers(List<Customer> offers) {
-		this.offers = offers;
+	public boolean isCarAvaliable() {
+		return isCarAvaliable;
+	}
+
+	public void setCarAvaliable(boolean isCarAvaliable) {
+		this.isCarAvaliable = isCarAvaliable;
 	}
 
 	public void setMake(String make) {
@@ -147,6 +160,7 @@ public class Car implements Serializable{
 		this.model = model;
 		this.year = year;
 		this.cost = cost;
+		this.isCarAvaliable = true;
 		setID();
 	}
 	

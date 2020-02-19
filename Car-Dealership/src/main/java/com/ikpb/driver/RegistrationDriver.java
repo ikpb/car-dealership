@@ -7,19 +7,19 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.Logger;
 
 import com.ikpb.daoimpl.CarImpl;
+import com.ikpb.daoimpl.CustomerImpl;
 import com.ikpb.daoimpl.UserImpl;
 import com.ikpb.login.Login;
-import com.ikpb.pojo.Car;
+
 import com.ikpb.pojo.User;
 import com.ikpb.pojo.User.UserType;
 public class RegistrationDriver {
 	private static final Logger logger = Logger.getLogger(RegistrationDriver.class);
 	public static void main(String[] args) throws InterruptedException {
-		
-		ArrayList<User> users = new ArrayList<User>();
-		CarImpl car = new CarImpl();
-		UserImpl user = new UserImpl();
-		ArrayList<Car> cars = new ArrayList<Car>();
+		CustomerImpl cust = new CustomerImpl();
+		CarImpl implCar = new CarImpl();
+		UserImpl users = new UserImpl();
+
 		Scanner scanner = new Scanner(System.in);
 		Login loggingIn = new Login();
 		logger.info("Object lists created");
@@ -42,7 +42,7 @@ public class RegistrationDriver {
 			UserType a= UserType.NEW_USER;
 			User b = new User();
 			while(a.equals(UserType.NEW_USER)) {
-				b = loggingIn.LoggingIn(user, count, UserType.CUSTOMER);
+				b = loggingIn.LoggingIn(count, UserType.CUSTOMER);
 				a = b.getUserType();
 				++count;
 				userOption = 0;
@@ -58,7 +58,7 @@ public class RegistrationDriver {
 			userOption = scanner.nextInt();
 			if(userOption == 1) {
 				logger.debug("getting the first pull of the car list.");
-				car.getCarsList();
+				implCar.getCarsList();
 				TimeUnit.MILLISECONDS.sleep(7000);
 				userOption = 0;
 			}else if(userOption == 2) {
@@ -66,26 +66,26 @@ public class RegistrationDriver {
 				int CarId = scanner.nextInt();
 				scanner.nextLine();
 				System.out.println("How much is your offer going to be?:");
-				int offerAmount = scanner.nextInt();
+				double offerAmount = scanner.nextDouble();
 				scanner.nextLine();
-				car.makeOffer(b.getFirstName(), offerAmount, CarId);
+				implCar.getCarById(CarId).addOffer(b, offerAmount);
 				userOption = 0;
 			}else if(userOption == 3) {
-				
 			}else if(userOption ==4) {
-				car.saveOffers();
+				
 			}else {
 				System.out.println("Please choose one of the 4 options...");
 				userOption = 0;
 			}
 			
-			}}else if(userOption == 2) {
+			}
+			}else if(userOption == 2) {
 				//log in as customer
 				int count=0;
 				UserType a= UserType.NEW_USER;
 				User b = new User();
 				while(a.equals(UserType.NEW_USER)) {
-					b = loggingIn.LoggingIn(user, count, UserType.EMPLOYEE);
+					b = loggingIn.LoggingIn(count, UserType.CUSTOMER);
 					a = b.getUserType();
 					++count;
 					userOption = 0;
@@ -102,20 +102,29 @@ public class RegistrationDriver {
 				userOption = scanner.nextInt();
 			
 				if(userOption == 1) {
-					car.getCarsList();
+					implCar.getCarsList();
 					
 					userOption = 0;
 					TimeUnit.MILLISECONDS.sleep(7000);
 				}else if(userOption == 2) {
-					
-					car.getOffer();
-					
+					System.out.println("Which car would you like to view the offers on?:");
+					 int carId =scanner.nextInt();
+					 scanner.hasNextLine();
+					 if(carId <= implCar.getCarsList().size())
+					 {
+						implCar.getCarsList().get(carId).getOffers();
+					 }else {
+						 System.out.println("Please enter a valid number");
+					 }
 					userOption = 0;
 				}else if(userOption == 3) {
-					car.addCar();
+					implCar.addCar();
 					userOption =0;
 				}else if(userOption ==4) {
-					car.deleteCar();
+					System.out.println("Which car would you like to view the delete?:");
+					 int carId =scanner.nextInt();
+					 scanner.hasNextLine();
+					implCar.deleteCar(carId);
 					userOption =0;
 				}else if(userOption ==5) {
 					
@@ -130,9 +139,8 @@ public class RegistrationDriver {
 
 		}else if(userOption == 3) {
 			
-			user.addUser();
-			user.saveUSer();
-			user.getUserList();
+			users.addUser();
+			users.getUserList();
 			userOption = 0;
 		}else if(userOption == 4) {
 			//exit system

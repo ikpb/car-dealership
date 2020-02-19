@@ -90,19 +90,15 @@ public class CarImpl implements CarDao{
 	}
 
 	@Override
-	public void deleteCar() {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Which car would you like to remove");
-		int deleteCarId = scan.nextInt();
-		scan.nextLine();
+	public void deleteCar(int id) {
 		for(int i=0; i<cars.size(); i++) {
-			if(cars.get(deleteCarId-1).getId() == deleteCarId) {
-				cars.remove(deleteCarId-1);
+			if(cars.get(id-1).getId() == id) {
+				cars.remove(id-1);
 			}
 			
 		}
 		
-		System.out.println("Car with Id: "+ deleteCarId + " deleted from database");
+		System.out.println("Car with Id: "+ id + " deleted from database");
 	}
 	public Car getSingleCar(Car car) {
 		Car c = new Car();
@@ -112,6 +108,14 @@ public class CarImpl implements CarDao{
 			}
 		}
 		return c;
+	}
+	public Car getCarById(int id) {
+		Car tempCar = new Car();
+		for(int l=0; l<cars.size(); l++) {
+			if(cars.get(id-1).getId() == id) {
+				tempCar = cars.get(id-1);
+			}
+		}return tempCar;
 	}
 	
 	public void saveCarList() {

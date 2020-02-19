@@ -16,7 +16,7 @@ public class CarDriver {
 		CarImpl cars = new CarImpl();
 		cars.getCarsListInitial();
 		cars.addCar();
-		cars.deleteCar();
+		cars.deleteCar(1);
 		cars.saveCarList();
 	}
 

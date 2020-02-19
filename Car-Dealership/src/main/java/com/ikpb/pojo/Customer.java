@@ -1,22 +1,16 @@
 package com.ikpb.pojo;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.ikpb.daoimpl.CarImpl;
-import com.ikpb.pojo.User.UserType;
-
-public class Customer {
+public class Customer extends User implements Serializable{
 	private String firstName;
 	private String lastName;
-	private int age;
 	private String email;
-	static String password;
+	private String password;
 	private UserType userType;
-	private int carId;
-	public int getCarId() {
-		return carId;
-	}
-	public void setCarId(int carId) {
-		this.carId = carId;
-	}
+	private List<Car> carsOwned = new ArrayList<Car>();
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -29,35 +23,38 @@ public class Customer {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public static String getPassword() {
+	public String getPassword() {
 		return password;
 	}
-	public static void setPassword(String password) {
-		Customer.password = password;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public UserType getUserType() {
 		return userType;
 	}
-	public void setUserType(UserType userType) {
-		this.userType = userType;
+	public void setUserType() {
+		this.userType = UserType.CUSTOMER;
+	}
+	
+	public List<Car> getCarsOwned() {
+		return carsOwned;
+	}
+	public void setCarsOwned(List<Car> carsOwned) {
+		this.carsOwned = carsOwned;
+	}
+	public void addCar(Car car) {
+		carsOwned.add(car);
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + age;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
@@ -73,8 +70,6 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (age != other.age)
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -96,22 +91,16 @@ public class Customer {
 	}
 	@Override
 	public String toString() {
-		return "Customer [firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", email=" + email
+		return "Customer [firstName=" + firstName + ", lastName=" + lastName  + ", email=" + email
 				+ ", userType=" + userType + "]";
 	}
-	public Customer(String string, int id, int sumId) {
-		super();
-		this.firstName = firstName;
-		this.carId = sumId;
-	}
 	
-	public Customer(String firstName, String lastName, int age, String email, UserType userType) {
+	public Customer(String firstName, String lastName, String email) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.age = age;
 		this.email = email;
-		this.userType = userType;
+		this.userType = UserType.CUSTOMER;
 	}
 	
 }

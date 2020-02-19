@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ikpb.daoimpl.Offers;
 import com.ikpb.users.Customers;
 
 public class Car implements Serializable{
@@ -12,47 +13,57 @@ public class Car implements Serializable{
 	 */
 	private static final long serialVersionUID = -3181062708322226377L;
 	//private fields
-	private String make;
+	
 	@Override
 	public String toString() {
-		return this.getId() + " Car Make:" + make + ", Model:" + model + ", Year:" + year + ", Cost:" + cost + ", Offers:" + offers + userName_;
+		return this.getId() + " Car Make:" + make + ", Model:" + model + ", Year:" + year + ", Cost:" + cost;
 	}
 	
-	
+	private String make;
 	private String model;
 	private int year;
-	private int cost;
+	private double cost;
 	private static int id =0;
 	private int carId;
-	public int offer;
-	private List<String> userName_;
-	public List<String> userName = new ArrayList<String>();;
-	public List<Integer> offers = new ArrayList<Integer>();
-	public List<Integer> getOffer() {
+	private double acceptedOffer;
+	private double payment;
+	private double remainingBalance;
+	public List<Customer> offers = new ArrayList<Customer>();//make a list of customer objects in 
+	
+	public List<Double> paymentsMade = new ArrayList<>();
+	public List<Double> getPaymentsMade() {
+		return paymentsMade;
+	}
+
+	public void setPaymentsMade(List<Double> paymentsMade) {
+		this.paymentsMade = paymentsMade;
+	}
+
+	public List<Customer> getOffer() {
 		return offers;
 	}
-	public void setOffer(int offer) {
-		this.offers.add(offer);
-	}
 	
-	public List<String> getUserName_() {
-		return userName;
+	public double getAcceptedOffer() {
+		return acceptedOffer;
 	}
-	public void setUserName_(List<String> userName_) {
-		this.userName_ = userName_;
+
+	public void setAcceptedOffer(double acceptedOffer) {
+		this.acceptedOffer = acceptedOffer;
 	}
-	public List<String> getUserName() {
-		return userName;
+
+	public double getRemainingBalance() {
+		return remainingBalance;
 	}
-	public void setUserName(String userName_) {
-		this.userName.add(userName_);
+
+	public void setRemainingBalance() {
+		
+		this.remainingBalance = this.makePayment();
 	}
-	public void addOffer(int offers) {
-		this.offers.add(offers);
+
+	public void setOffers(List<Customer> offers) {
+		this.offers = offers;
 	}
-	public String getMake() {
-		return make;
-	}
+
 	public void setMake(String make) {
 		this.make = make;
 	}
@@ -68,10 +79,10 @@ public class Car implements Serializable{
 	public void setYear(int year) {
 		this.year = year;
 	}
-	public int getCost() {
+	public double getCost() {
 		return cost;
 	}
-	public void setCost(int cost) {
+	public void setCost(double cost) {
 		this.cost = cost;
 	}
 	public int getId() {
@@ -81,18 +92,26 @@ public class Car implements Serializable{
 		id++;
 		this.carId = id;
 	}
-	
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + cost;
-		result = prime * result + ((make == null) ? 0 : make.hashCode());
-		result = prime * result + ((model == null) ? 0 : model.hashCode());
-		result = prime * result + year;
-		return result;
+	public double getPayment() {
+		return payment;
 	}
+
+	public void setPayment(double acceptedOffer) {
+		
+		
+		this.payment = acceptedOffer/60;
+	}
+	public double makePayment(){
+		double paymentmade = 0;
+		if(this.remainingBalance - this.payment>=0) {
+			paymentmade = this.remainingBalance - this.payment;
+		}
+		this.paymentsMade.add(payment);
+		return paymentmade;
+	}
+
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -122,34 +141,13 @@ public class Car implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Car(String make, String model, int year, int cost, List<Integer> offers) {
+	public Car(String make, String model, int year, double cost) {
 		super();
 		this.make = make;
 		this.model = model;
 		this.year = year;
 		this.cost = cost;
-		this.offers = offers;
 		setID();
-		
-	}public Car(String make, String model, int year, int cost,int offers, String userName, int id){
-		super();
-		this.make = make;
-		this.model = model;
-		this.year = year;
-		this.cost = cost;
-		this.offers.add(offers);
-		this.userName.add(userName);
-		this.carId = id;
-	}public Car(String make, String model, int year, int cost,List<Integer> offers, List<String> userName, int id){
-		super();
-		this.make = make;
-		this.model = model;
-		this.year = year;
-		this.cost = cost;
-		this.userName_ = userName;
-		this.offers = offers;
-	
-		this.carId = id;
 	}
 	
 }

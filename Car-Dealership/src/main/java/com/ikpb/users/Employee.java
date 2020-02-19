@@ -7,62 +7,53 @@ import com.ikpb.pojo.User.UserType;
 
 public class Employee extends User implements Serializable{
 	private String password;
+	private String firstName;
+	private String lastName;
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	private String email;
+	
+	
 	@Override
 	public String toString() {
-		return "Employee [getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getAge()="
-				+ getAge() + ", getEmail()=" + getEmail() + ", getPassword()=" + getPassword() + ", getUserType()="
-				+ getUserType() + "]" + "\r\n";
+		return "Employee FirstName=" + firstName + ", lastName=" + lastName + ", email=" + email;
 	}
 	public String setEmployeeLoginInfo() {
 		return "Username: " + getEmail() + "password: " + getPassword();
 	}
-		//view payments
-		private int viewAllPayments() {
-			return 0;
-		}
-		//view cars on a lot
-		public String viewCarsOnLot() {
-			return null;
-		}
-		//make an offer on a care
-		public int addCarToLot() {
-			return 0;
-		}
-		public boolean removeCarFromLot() {
-			return false;
-		}
-		
-		
-
 		public String getPassword() {
 			return password;
 		}
 		public void setPassword(String password) {
 			this.password = password;
 		}
-		public Employee(String firstName, String lastName, int age, String email, String password, UserType user) {
+		public Employee(String firstName, String lastName, String email, String password) {
 			this();
 			setFirstName(firstName);
 			setLastName(lastName);
-			setAge(age);
 			setEmail(email);
 			setPassword(password);
-			setUserType(user);
-			
-			
-		}
-		public Employee(String email, String pasword)
-		{
-			this();
-			setEmail(email);
-			setPassword(password);
+			setUserType(UserType.EMPLOYEE);
 		}
 		public Employee() {
 			super();
 			// TODO Auto-generated constructor stub
 		}
-		public Employee(String firstName, String lastName, int age, String email,
-				UserType UserClassification) {
-	
-		}
+
 }

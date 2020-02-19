@@ -33,14 +33,11 @@ public class UserImpl implements UserDAO{
 				try {
 				Object tempObject = (Object)ois.readObject();
 				User u = (User)tempObject;
-				
-				User d = new User(u.getFirstName(),u.getLastName(),u.getAge(),u.getEmail(),u.getPassword(),u.getUserType());
-				users.add(d);
+				users.add(u);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				
+				}	
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -88,7 +85,7 @@ public class UserImpl implements UserDAO{
 		}else {
 			b = UserType.EMPLOYEE;
 		}
-		User user = new User(firstName, lastName,age,email,password,b);
+		User user = new User(firstName, lastName,email,password,b);
 		users.add(user);
 		
 	}
@@ -126,11 +123,11 @@ public class UserImpl implements UserDAO{
 	}
 
 	@Override
-	public User getUser(int i) {
+	public User getUser(User user) {
 		User u = new User();
 		for(int j=0;j<users.size();j++) {
-			if(j==i) {
-			 u= users.get(i);
+			if(users.get(j).equals(user)) {
+			 u= users.get(j);
 			}
 		}
 		return u;

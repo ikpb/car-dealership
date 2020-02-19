@@ -12,7 +12,6 @@ public class User implements Serializable {
 	}
 	private String firstName;
 	private String lastName;
-	private int age;
 	private String email;
 	private String password;
 	private UserType usertype;
@@ -29,13 +28,6 @@ public class User implements Serializable {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
 	}
 	public String getEmail() {
 		return email;
@@ -55,21 +47,9 @@ public class User implements Serializable {
 	public UserType getUserType() {
 		return this.usertype;
 	}
-	public int getOffer() {
-		return offer;
-	}
-	public void setOffer() {
-		this.offer = offer;
-	}
-	public int getMakePayment() {
-		return makePayment;
-	}
-	public void setMakePayment(int makePayment) {
-		this.makePayment = makePayment;
-	}
 	@Override
 	public String toString() {
-		return "User First Name: " + firstName + ", Last Name: " + lastName + ", Age= " + age + ", Email: " + email
+		return "User First Name: " + firstName + ", Last Name: " + lastName + ", Email: " + email
 				+ "password: " + password + "and registered as an: " + usertype ;
 	}
 
@@ -86,21 +66,13 @@ public class User implements Serializable {
 //		this.password = password;
 //	}
 //	
-	public User(String firstName, String lastName, int age, String email, String password, UserType usertype) {
+
+	public User(String firstName, String lastName, String email,String password, UserType usertype) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.age = age;
 		this.email = email;
 		this.password = password;
-		this.usertype = usertype;
-	}
-	public User(String firstName, String lastName, int age, String email,UserType usertype) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
-		this.email = email;
 		this.usertype = usertype;
 	}
 	public User(UserType usertype) {

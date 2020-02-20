@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 public class UserImpl implements UserDAO{
 	
-	ArrayList<User> users;
+	List<User> users;
 	public UserImpl() {
 		super();
 		users = new ArrayList<User>();
@@ -28,6 +28,7 @@ public class UserImpl implements UserDAO{
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAllUsers() {
 		String filename;
@@ -38,17 +39,13 @@ public class UserImpl implements UserDAO{
 		try {
 			fis = new FileInputStream(filename);
 			ois = new ObjectInputStream(fis);
-			int num = ois.readInt();
-			for(int i=0; i<num;i++) {
+			
 				try {
-				Object tempObject = (Object)ois.readObject();
-				User u = (User)tempObject;
-				users.add(u);
+				users = (List<User>)ois.readObject();
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
-			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -98,7 +95,7 @@ public class UserImpl implements UserDAO{
 	}
 
 	@Override
-	public void saveUSer() {
+	public void saveUSer(List<User> user) {
 		String filename;
 		filename = "users.dat";
 		FileOutputStream fos = null;
@@ -106,10 +103,8 @@ public class UserImpl implements UserDAO{
 		try {
 			fos = new FileOutputStream(filename);
 			oos = new ObjectOutputStream(fos);
-			oos.writeInt(users.size());
-			for(User x: users) {
-				oos.writeObject(x);
-			}
+			oos.writeObject(user);
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

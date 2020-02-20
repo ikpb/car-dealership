@@ -8,7 +8,7 @@ public interface UserDAO {
 	public List<User> getUserList();
 	public User getUser(User user);
 	public void addUser();
-	public void saveUSer();
+	public void saveUSer(List<User> user);
 	public void deleteLastUser();
 	
 	

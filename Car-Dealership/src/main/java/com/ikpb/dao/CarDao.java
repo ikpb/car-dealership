@@ -8,7 +8,7 @@ public interface CarDao {
 	public List<Car>getCarsList();
 	public void addCar();
 	public void deleteCar(int id);
-	public void saveCarList();
+	public void saveCarList(List<Car> car);
 
 
 }

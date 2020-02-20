@@ -32,8 +32,10 @@ public class CarImpl implements CarDao{
 		cars.add(1, car);
 		car.addOffer(user1, 2500.00);
 		car.addOffer(user2, 3500.00);
+		getCarsListInitial();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Car> getCarsListInitial() {
 		String filename;
@@ -45,18 +47,11 @@ public class CarImpl implements CarDao{
 			logger.warn("trying to complete the writing to a file");
 			fis = new FileInputStream(filename);
 			ois = new ObjectInputStream(fis);
-			int num = ois.readInt();
-			for(int i=0; i<num;i++) {
-				try {
-				Object tempObject = (Object)ois.readObject();
-				@SuppressWarnings("unchecked")
-				Car c = (Car)tempObject;
-				cars.add(c);
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+			try {
+				cars = (List<Car>) ois.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -128,7 +123,8 @@ public class CarImpl implements CarDao{
 		}return tempCar;
 	}
 	
-	public void saveCarList() {
+	@Override
+	public void saveCarList(List<Car> car) {
 		String filename;
 		filename = "car.dat";
 		FileOutputStream fos = null;
@@ -136,10 +132,7 @@ public class CarImpl implements CarDao{
 		try {
 			fos = new FileOutputStream(filename);
 			oos = new ObjectOutputStream(fos);
-			oos.writeInt(cars.size());
-			for(Car x: cars) {
-				oos.writeObject(x);
-			}
+			oos.writeObject(car);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -162,4 +155,6 @@ public class CarImpl implements CarDao{
 				cars.remove(cars.get(i));		
 		}
 	}
+
+	
 }

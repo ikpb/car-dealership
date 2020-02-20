@@ -1,4 +1,5 @@
 package com.ikpb.driver;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -17,7 +18,7 @@ import com.ikpb.pojo.Car;
 import com.ikpb.pojo.User;
 import com.ikpb.pojo.User.UserType;
 import com.ikpb.util.BusinessLogic;
-public class RegistrationDriver {
+public class RegistrationDriver implements Serializable{
 	private static final Logger logger = Logger.getLogger(RegistrationDriver.class);
 	public static void main(String[] args) throws InterruptedException {
 
@@ -129,9 +130,9 @@ public class RegistrationDriver {
 						userOption =0;}
 			}else if(userOption ==4) {
 				logger.info("User left customer options.");
-				users.saveUSer();
+				users.saveUSer(users.getUserList());
 				logger.info("Users saved");
-				implCar.saveCarList();
+				implCar.saveCarList(implCar.getCarsList());
 				logger.info("Car list saved");
 				userOption =0;
 				break;
@@ -193,6 +194,7 @@ public class RegistrationDriver {
 					 String usrInput = scanner.nextLine().toLowerCase();
 					 if(usrInput.equals("y")) {
 						 System.out.println("Which offer do you want to accept?(Input name)");
+						 usrInput = scanner.nextLine().toLowerCase();
 						 justBusiness.viewAllOffersOnCar(implCar.getCarById(carId));
 						 justBusiness.acceptOffer(b, implCar.getCarById(carId));
 						 
@@ -228,9 +230,9 @@ public class RegistrationDriver {
 					}userOption =0;
 				}else if(userOption ==6) {
 					logger.info("User left Employee options.");
-					users.saveUSer();
+					users.saveUSer(users.getUserList());
 					logger.info("Users saved");
-					implCar.saveCarList();
+					implCar.saveCarList(implCar.getCarsList());
 					logger.info("Car list saved");
 					userOption =0;
 					break;
@@ -244,7 +246,7 @@ public class RegistrationDriver {
 		}else if(userOption == 3) {
 			
 			users.addUser();
-			users.saveUSer();
+			users.saveUSer(users.getUserList());
 			userOption = 0;
 		}else if(userOption == 4) {
 			//exit system

@@ -16,7 +16,17 @@ import java.util.List;
 import java.util.Scanner;
 public class UserImpl implements UserDAO{
 	
-	ArrayList<User> users = new ArrayList<User>();
+	ArrayList<User> users;
+	public UserImpl() {
+		super();
+		users = new ArrayList<User>();
+		users.add(new User("Toyoda", "Matrix", "test", "123",UserType.EMPLOYEE));
+		users.add(new User("Toyoda", "Matrix", "test", "123",UserType.CUSTOMER));
+		users.add(new User("Toyoda", "Matrix", "bob", "123",UserType.CUSTOMER));
+		users.add(new User("Honda", "Civic", "John", "123",UserType.CUSTOMER));
+		getAllUsers();
+	}
+	
 
 	@Override
 	public List<User> getAllUsers() {
@@ -70,9 +80,6 @@ public class UserImpl implements UserDAO{
 		String firstName = scan.nextLine();
 		System.out.println("Enter your Last Name: ");
 		String lastName = scan.nextLine();
-		System.out.println("Enter your Age: ");
-		int age = scan.nextInt();
-		scan.nextLine();
 		System.out.println("Enter your Email (This will be your Username): ");
 		String email = scan.nextLine();
 		System.out.println("Please enter a Password");
@@ -85,8 +92,8 @@ public class UserImpl implements UserDAO{
 		}else {
 			b = UserType.EMPLOYEE;
 		}
-		User user = new User(firstName, lastName,email,password,b);
-		users.add(user);
+		users.add(new User(firstName, lastName,email,password,b));
+		
 		
 	}
 

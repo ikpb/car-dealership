@@ -1,6 +1,8 @@
 package com.ikpb.pojo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable {
 	/**
@@ -17,6 +19,7 @@ public class User implements Serializable {
 	private UserType usertype;
 	private int offer;
 	private int makePayment;
+	private List<Car> car = new ArrayList<Car>();
 	public String getFirstName() {
 		return firstName;
 	}
@@ -46,6 +49,23 @@ public class User implements Serializable {
 	}
 	public UserType getUserType() {
 		return this.usertype;
+	}
+	public void addCartoList(Car car) {
+		this.car.add(car);
+	}
+	public void viewCarsOwn() {
+		for(int i =0; i<car.size();i++) {
+			System.out.println(car);
+		}
+	}
+	public void getCarPaymentsMade(Car car) {
+		System.out.println(car.paymentsMade);
+	}
+	public List<Car> getCarList() {
+		return car;
+	}
+	public void setCar(List<Car> car) {
+		this.car = car;
 	}
 	@Override
 	public String toString() {

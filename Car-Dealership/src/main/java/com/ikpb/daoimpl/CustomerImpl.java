@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ikpb.dao.CustomerDAO;
 import com.ikpb.pojo.Customer;
+import com.ikpb.pojo.User;
 
 public class CustomerImpl implements CustomerDAO{
 
@@ -26,6 +27,9 @@ public class CustomerImpl implements CustomerDAO{
 				{ custIndex = i;}
 		
 		}return cust.get(custIndex);
+	}
+	public void addCustomer(User user) {
+		cust.add((Customer)user);
 	}
 	
 

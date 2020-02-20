@@ -1,5 +1,6 @@
 package com.ikpb.pojo;
-
+import com.ikpb.daoimpl.UserImpl;
+import com.ikpb.pojo.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public class Car implements Serializable{
 	
 	@Override
 	public String toString() {
-		return this.getId() + " Car Make:" + make + ", Model:" + model + ", Year:" + year + ", Cost:" + cost;
+		return "Car ID:" + this.getId() + " Car Make:" + make + ", Model:" + model + ", Year:" + year + ", Cost:" + cost;
 	}
 	
 	private String make;
@@ -34,7 +35,6 @@ public class Car implements Serializable{
 	public List<Double> getPaymentsMade() {
 		return paymentsMade;
 	}
-
 	public Map<User, Double> getOffers() {
 		return offers;
 	}

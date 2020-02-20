@@ -1,6 +1,7 @@
 package com.ikpb.login;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.ikpb.daoimpl.UserImpl;
@@ -13,6 +14,7 @@ public class Login {
 		Scanner input = new Scanner(System.in);
 		//init user class
 		UserImpl user = new UserImpl();
+		List<User> use = new ArrayList<User>();
 		
 		User logInInfo = new User();
 		
@@ -21,9 +23,6 @@ public class Login {
 		System.out.println("Please enter your Password:");
 		String password = input.nextLine();
 
-		if(count==0) {
-			user.getAllUsers();
-		}
 			for(int i = 0; i<user.getUserList().size();i++) {
 				
 				if(email.equals(user.getUserList().get(i).getEmail()) && password.equals(user.getUserList().get(i).getPassword()) && userType.equals(user.getUserList().get(i).getUserType())){
@@ -32,8 +31,10 @@ public class Login {
 					break;
 				}else {
 					logInInfo = new User(UserType.NEW_USER);
+					
 				}
-			}
+			}System.out.println("Your Username and Password are invalid, please try again.");
+			System.out.println("If this is your first time, please register with us!");
 	
 		return logInInfo;
 		

@@ -2,6 +2,9 @@ package com.ikpb.daoimpl;
 
 import com.ikpb.dao.CarDao;
 import com.ikpb.pojo.Car;
+import com.ikpb.pojo.User;
+import com.ikpb.pojo.User.UserType;
+
 import java.util.logging.LogManager;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.Logger;
@@ -16,12 +19,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CarImpl implements CarDao{
+	
 	private static final Logger logger = Logger.getLogger(CarImpl.class);
 	List<Car> cars = new ArrayList<Car>();
 	public CarImpl() {
 		super();
+		User user1 = new User("Toyoda", "Matrix", "bob", "123",UserType.CUSTOMER);
+		User user2 = new User("Honda", "Civic", "John", "123",UserType.CUSTOMER);
 		cars = new ArrayList<Car>();
 		cars.add(new Car("Toyoda", "Matrix", 1999, 2000));
+		Car car = new Car("tomota","daytrix",2000, 3000);
+		cars.add(1, car);
+		car.addOffer(user1, 2500.00);
+		car.addOffer(user2, 3500.00);
 	}
 	
 	@Override
@@ -92,8 +102,8 @@ public class CarImpl implements CarDao{
 	@Override
 	public void deleteCar(int id) {
 		for(int i=0; i<cars.size(); i++) {
-			if(cars.get(id-1).getId() == id) {
-				cars.remove(id-1);
+			if(cars.get(i).getId() == id) {
+				cars.remove(cars.get(i));
 			}
 			
 		}
@@ -112,8 +122,8 @@ public class CarImpl implements CarDao{
 	public Car getCarById(int id) {
 		Car tempCar = new Car();
 		for(int l=0; l<cars.size(); l++) {
-			if(cars.get(id-1).getId() == id) {
-				tempCar = cars.get(id-1);
+			if(cars.get(l).getId() == id) {
+				tempCar = cars.get(l);
 			}
 		}return tempCar;
 	}

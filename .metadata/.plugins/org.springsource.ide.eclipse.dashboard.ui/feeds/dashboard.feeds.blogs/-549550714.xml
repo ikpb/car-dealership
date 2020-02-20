@@ -5,7 +5,202 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2020-02-19T09:39:51Z</updated>
+  <updated>2020-02-20T00:22:00Z</updated>
+  <entry>
+    <title>Spring Tips: RSocket and Spring Security</title>
+    <link rel="alternate" href="https://spring.io/blog/2020/02/20/spring-tips-rsocket-and-spring-security" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2020-02-20:3965</id>
+    <updated>2020-02-20T00:22:00Z</updated>
+    <content type="html">&lt;p&gt;Hi, Spring fans! In this first installment of &lt;a href="http://bit.ly/spring-tips-playlist"&gt;&lt;em&gt;Spring Tips&lt;/em&gt; season 7&lt;/a&gt;, we look at how to lock down RSocket services with Spring Security. &lt;/p&gt;
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/ER-mbWp2xYg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;By &lt;a href="http://twitter.com/starbuxman"&gt;Josh Long (@starbuxman)&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;Hi, Spring fans! In this installment, we look at using Spring Security and RSocket together. RSocket is a payload and platform agonostic wire protocol developed by engineers at Netflix and Facebook that supports the Reactive Streams concepts on the wire. The protocol is a stateful-connection centric protocol: a requester node connects and stays connected to another responder node. Once connected, either side can transmit information at any time. Connections are multiplexed, meaning one connection can handle multiple requests. RSocket is designed from the ground up to support propagating out-of-band information like headers and service health information, in addition to the payloads themselves. So, one user may use the connection with one service, or multiple users may use the same connection. &lt;/p&gt;
+&lt;p&gt;In this video, we build on Spring Framework 5.2&amp;rsquo;s core RSocket support (along with the very convenient &lt;code&gt;@MessageMapping&lt;/code&gt; component model) to build an RSocket client that then connects, in a secure way, to an RSocket service. &lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s introduce a basic RSocket service. You&amp;rsquo;ll need to go to the &lt;a href="http://start.spring.io"&gt;Spring Initializr&lt;/a&gt; and generate a new project using with RSocket and Security selected and - importantly - Spring Boot 2.3 or later.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.greetingsservice;&#xD;
+&#xD;
+import lombok.AllArgsConstructor;&#xD;
+import lombok.Data;&#xD;
+import lombok.NoArgsConstructor;&#xD;
+import org.springframework.boot.SpringApplication;&#xD;
+import org.springframework.boot.autoconfigure.SpringBootApplication;&#xD;
+import org.springframework.context.annotation.Bean;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;&#xD;
+import org.springframework.messaging.handler.annotation.MessageMapping;&#xD;
+import org.springframework.messaging.rsocket.RSocketStrategies;&#xD;
+import org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler;&#xD;
+import org.springframework.security.config.Customizer;&#xD;
+import org.springframework.security.config.annotation.rsocket.EnableRSocketSecurity;&#xD;
+import org.springframework.security.config.annotation.rsocket.RSocketSecurity;&#xD;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;&#xD;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;&#xD;
+import org.springframework.security.core.context.SecurityContext;&#xD;
+import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;&#xD;
+import org.springframework.security.core.userdetails.User;&#xD;
+import org.springframework.security.core.userdetails.UserDetails;&#xD;
+import org.springframework.security.messaging.handler.invocation.reactive.AuthenticationPrincipalArgumentResolver;&#xD;
+import org.springframework.security.rsocket.core.PayloadSocketAcceptorInterceptor;&#xD;
+import org.springframework.stereotype.Controller;&#xD;
+import reactor.core.publisher.Flux;&#xD;
+import reactor.core.publisher.Mono;&#xD;
+&#xD;
+import java.security.Principal;&#xD;
+import java.time.Duration;&#xD;
+import java.time.Instant;&#xD;
+import java.util.function.Supplier;&#xD;
+import java.util.stream.Stream;&#xD;
+&#xD;
+@SpringBootApplication&#xD;
+public class GreetingsServiceApplication {&#xD;
+&#xD;
+	public static void main(String[] args) {&#xD;
+		SpringApplication.run(GreetingsServiceApplication.class, args);&#xD;
+	}&#xD;
+}&#xD;
+&#xD;
+@Data&#xD;
+@AllArgsConstructor&#xD;
+@NoArgsConstructor&#xD;
+class GreetingResponse {&#xD;
+	private String message;&#xD;
+}&#xD;
+&#xD;
+@Controller&#xD;
+class GreetingController {&#xD;
+&#xD;
+	@MessageMapping(&amp;quot;greetings&amp;quot;)&#xD;
+	Flux&amp;lt;GreetingResponse&amp;gt; greet(@AuthenticationPrincipal Mono&amp;lt;UserDetails&amp;gt; user) {&#xD;
+		return user.map(UserDetails::getUsername).flatMapMany(GreetingController::greet);&#xD;
+	}&#xD;
+&#xD;
+	private static Flux&amp;lt;GreetingResponse&amp;gt; greet(String name) {&#xD;
+		return Flux.fromStream(&#xD;
+			Stream&#xD;
+				.generate(() -&amp;gt; new GreetingResponse(&amp;quot;Hello &amp;quot; + name + &amp;quot; @ &amp;quot; + Instant.now().toString())))&#xD;
+			.delayElements(Duration.ofSeconds(1));&#xD;
+	}&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I&amp;rsquo;ve done two other videos on &lt;a href="https://www.youtube.com/watch?v=GDIDSzZLjjg"&gt;RSocket&lt;/a&gt; and the &lt;a href="https://www.youtube.com/watch?v=BxHqeq58xrE"&gt;Spring support for RSocket&lt;/a&gt; that you might consult before watching this one. The first introduces raw RSocket API, and the second introduces the component model in Spring. Please refer to those for a sense of what&amp;rsquo;s happening, basically, in this controller.&lt;/p&gt;
+&lt;p&gt;Spring Security provides three mechanisms for securing RSocket-based services. BASIC authentication is sort of like HTTP BASIC - it supports usernames and passwords. It is also now deprecated. So, we&amp;rsquo;ll focus on Simple authentication in this video. Simple authentication is also username- and password-based. RSocket also supports JWT-based authentication. JWT supports token-based authentication and is perhaps the more interesting mechanism for sophisticated security use-cases. (RSocket-based JWT authentication will perhaps be the subject of another video.)&lt;/p&gt;
+&lt;p&gt;As RSocket connections can be stateful and shared, we&amp;rsquo;ll need to decide: do we do authentication on the connection creation, or for each message sent across the connection? If it&amp;rsquo;s shared, we will want each user to provide their own authentication for every request.&lt;/p&gt;
+&lt;p&gt;Spring Security addresses two concerns: authentication and authorization. These are related, but orthagonal, concerns. Authentication answers the question: who&amp;rsquo;s making the request to a system? Authorization answers the question: what are they allowed to do once they&amp;rsquo;re inside the system? &lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s introduce the Spring Security configuration for the application. &lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;&lt;br/&gt;@Configuration&#xD;
+@EnableRSocketSecurity&#xD;
+class RSocketSecurityConfiguration {&#xD;
+&#xD;
+	@Bean&#xD;
+	RSocketMessageHandler messageHandler(RSocketStrategies strategies) {&#xD;
+		var mh = new RSocketMessageHandler();&#xD;
+		mh.getArgumentResolverConfigurer().addCustomResolver(new AuthenticationPrincipalArgumentResolver());&#xD;
+		mh.setRSocketStrategies(strategies);&#xD;
+		return mh;&#xD;
+	}&#xD;
+&#xD;
+	@Bean&#xD;
+	MapReactiveUserDetailsService authentication() {&#xD;
+		var jlong = User.withDefaultPasswordEncoder().username(&amp;quot;jlong&amp;quot;).password(&amp;quot;pw&amp;quot;).roles(&amp;quot;USER&amp;quot;).build();&#xD;
+		var rwinch = User.withDefaultPasswordEncoder().username(&amp;quot;rwinch&amp;quot;).password(&amp;quot;pw&amp;quot;).roles(&amp;quot;ADMIN&amp;quot;, &amp;quot;USER&amp;quot;).build();&#xD;
+		return new MapReactiveUserDetailsService(jlong, rwinch);&#xD;
+    }&#xD;
+    &#xD;
+    @Bean&#xD;
+	PayloadSocketAcceptorInterceptor authorization(RSocketSecurity security) {&#xD;
+		return security&#xD;
+			.authorizePayload(spec -&amp;gt;&#xD;
+				spec&#xD;
+					.route(&amp;quot;greetings&amp;quot;).authenticated()&#xD;
+					.anyExchange().permitAll()&#xD;
+			)&#xD;
+			.simpleAuthentication(Customizer.withDefaults())&#xD;
+			.build();&#xD;
+	}&#xD;
+}&#xD;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The security configuration features three beans. The first, &lt;code&gt;messageHandler&lt;/code&gt;, activates parts of the Spring Security component model that let us inject the authenticated user (with the &lt;code&gt;@AuthenticatedPrincipal&lt;/code&gt; annotation) into our handler methods (those annotated with &lt;code&gt;@MessageMapping&lt;/code&gt;). &lt;/p&gt;
+&lt;p&gt;The second bean, &lt;code&gt;authentication&lt;/code&gt;, installs a simple username and password dictionary. You could talk to any number of different identity providers, but for ease of the demonstration, I&amp;rsquo;ve configured an in-memory &lt;code&gt;MapReactiveUserDetailsService&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The third bean, &lt;code&gt;authorization&lt;/code&gt;, is - to my mind at least - the most interesting. The goal with this bean is to tell the framework which RSocket routes (in this case, &lt;code&gt;greetings&lt;/code&gt;) are accessible to requests. This is hopefully self-describing: all requests to &lt;code&gt;greetings&lt;/code&gt; should be authenticated. Otherwise, any other request is allowed to pass through unchecked. &lt;/p&gt;
+&lt;p&gt;Now that we&amp;rsquo;ve got that up and running, let&amp;rsquo;s look at the client. &lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.greetingsclient;&#xD;
+&#xD;
+import io.rsocket.metadata.WellKnownMimeType;&#xD;
+import lombok.AllArgsConstructor;&#xD;
+import lombok.Data;&#xD;
+import lombok.NoArgsConstructor;&#xD;
+import lombok.SneakyThrows;&#xD;
+import lombok.extern.log4j.Log4j2;&#xD;
+import org.springframework.boot.SpringApplication;&#xD;
+import org.springframework.boot.autoconfigure.SpringBootApplication;&#xD;
+import org.springframework.boot.context.event.ApplicationReadyEvent;&#xD;
+import org.springframework.boot.rsocket.messaging.RSocketStrategiesCustomizer;&#xD;
+import org.springframework.context.ApplicationListener;&#xD;
+import org.springframework.context.annotation.Bean;&#xD;
+import org.springframework.messaging.rsocket.RSocketRequester;&#xD;
+import org.springframework.security.core.userdetails.User;&#xD;
+import org.springframework.security.rsocket.metadata.SimpleAuthenticationEncoder;&#xD;
+import org.springframework.security.rsocket.metadata.UsernamePasswordMetadata;&#xD;
+import org.springframework.util.MimeType;&#xD;
+import org.springframework.util.MimeTypeUtils;&#xD;
+import reactor.core.publisher.Mono;&#xD;
+&#xD;
+@Log4j2&#xD;
+@SpringBootApplication&#xD;
+public class GreetingsClientApplication {&#xD;
+&#xD;
+	private final MimeType mimeType = MimeTypeUtils.parseMimeType(WellKnownMimeType.MESSAGE_RSOCKET_AUTHENTICATION.getString());&#xD;
+	private final UsernamePasswordMetadata credentials = new UsernamePasswordMetadata(&amp;quot;jlong&amp;quot;, &amp;quot;pw&amp;quot;);&#xD;
+&#xD;
+	@SneakyThrows&#xD;
+	public static void main(String[] args) {&#xD;
+		SpringApplication.run(GreetingsClientApplication.class, args);&#xD;
+		System.in.read();&#xD;
+	}&#xD;
+&#xD;
+	@Bean&#xD;
+	RSocketStrategiesCustomizer rSocketStrategiesCustomizer() {&#xD;
+		return strategies -&amp;gt; strategies.encoder(new SimpleAuthenticationEncoder());&#xD;
+	}&#xD;
+&#xD;
+	@Bean&#xD;
+	RSocketRequester rSocketRequester(RSocketRequester.Builder builder) {&#xD;
+		return builder&#xD;
+//			.setupMetadata(this.credentials , this.mimeType)&#xD;
+			.connectTcp(&amp;quot;localhost&amp;quot;, 8888)&#xD;
+			.block();&#xD;
+	}&#xD;
+&#xD;
+	@Bean&#xD;
+	ApplicationListener&amp;lt;ApplicationReadyEvent&amp;gt; ready(RSocketRequester greetings) {&#xD;
+		return event -&amp;gt;&#xD;
+			greetings&#xD;
+				.route(&amp;quot;greetings&amp;quot;)&#xD;
+				.metadata(this.credentials, this.mimeType)&#xD;
+				.data(Mono.empty())&#xD;
+				.retrieveFlux(GreetingResponse.class)&#xD;
+				.subscribe(gr -&amp;gt; log.info(&amp;quot;secured response: &amp;quot; + gr.toString()));&#xD;
+	}&#xD;
+}&#xD;
+&#xD;
+&#xD;
+@Data&#xD;
+@AllArgsConstructor&#xD;
+@NoArgsConstructor&#xD;
+class GreetingResponse {&#xD;
+	private String message;&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We will send metadata to the service. We have two choices. If the connection to the RSocket connection is shared, then we&amp;rsquo;d want to send the metadata for each request. This is what we&amp;rsquo;ve done in this example, as it&amp;rsquo;s the more likely scenario. On the other hand, if you need to only authenticate once, then you can send the metadata in the establishment of the connection in &lt;code&gt;rSocketRequester&lt;/code&gt; bean. &lt;/p&gt;
+&lt;p&gt;We use the &lt;code&gt;RSocketRequester&lt;/code&gt; client in the event listener where we make a call to the &lt;code&gt;greetings&lt;/code&gt; route on the service. It&amp;rsquo;s basically the same as it&amp;rsquo;s always been, with the slight difference that we&amp;rsquo;re encoding metadata in the request for authentication. &lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ve only begun to scratch the service surface in this blog - watch the video for more details! :D &lt;/p&gt;
+&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
+  </entry>
   <entry>
     <title>Announcing Spring Cloud Stream Horsham.SR2 (3.0.2.RELEASE) and Spring Cloud Hoxton.SR2</title>
     <link rel="alternate" href="https://spring.io/blog/2020/02/19/announcing-spring-cloud-stream-horsham-sr2-3-0-2-release-and-spring-cloud-hoxton-sr2" />
@@ -831,23 +1026,6 @@ dependencies {&#xD;
   // ...&#xD;
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
-  </entry>
-  <entry>
-    <title>"The Phoenix Project" and "The Unicorn Project" author Gene Kim</title>
-    <link rel="alternate" href="https://spring.io/blog/2020/01/30/the-phoenix-project-and-the-unicorn-project-author-gene-kim" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2020-01-30:3945</id>
-    <updated>2020-01-30T22:56:09Z</updated>
-    <content type="html">&lt;p&gt;Hi, Spring fans! In this episode, Josh Long (&lt;a href="http://twitter.com/starbuxman"&gt;@starbuxman&lt;/a&gt;) talks to &amp;ldquo;The Phoenix Project&amp;rdquo; and &amp;ldquo;The Unicorn Project&amp;rdquo; author Gene Kim (&lt;a href="http://twitter.com/RealGeneKim"&gt;@RealGeneKim&lt;/a&gt;) about #DevOps, his experience of the industry, IT organizations and a MILLION TRILLION other things. I&amp;rsquo;d listen to this one first! &lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://www.amazon.com/Phoenix-Project-Helping-Business-Anniversary/dp/B00VATFAMI/ref=tmm_aud_swatch_0?_encoding=UTF8&amp;qid=&amp;sr="&gt;The Phoenix Project&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://www.amazon.com/Unicorn-Project-Developers-Disruption-Thriving/dp/B0812C82T9/ref=tmm_aud_swatch_0?_encoding=UTF8&amp;qid=&amp;sr="&gt;The Unicorn Project&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/752396113&amp;color=%23ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true"&gt;&lt;/iframe&gt;
 &lt;!-- rendered by Sagan Renderer Service --&gt;</content>
   </entry>
 </feed>

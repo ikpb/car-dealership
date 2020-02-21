@@ -24,16 +24,17 @@ public class CarImpl implements CarDao{
 	List<Car> cars = new ArrayList<Car>();
 	public CarImpl() {
 		super();
-		getCarsListInitial();
-		User user1 = new User("Toyoda", "Matrix", "bob", "123",UserType.CUSTOMER);
-		User user2 = new User("Honda", "Civic", "John", "123",UserType.CUSTOMER);
-		cars = new ArrayList<Car>();
-		cars.add(new Car("Toyoda", "Matrix", 1999, 2000));
-		Car car = new Car("tomota","daytrix",2000, 3000);
-		cars.add(1, car);
-		car.addOffer(user1, 2500.00);
-		car.addOffer(user2, 3500.00);
 		
+//		User user1 = new User("johny", "twochains", "john", "123",UserType.CUSTOMER);
+//		User user2 = new User("mark", "parez", "mark", "123",UserType.CUSTOMER);
+//		cars = new ArrayList<Car>();
+//		cars.add(new Car("Toyoda", "Matrix", 1999, 1500));
+//		Car car = new Car("Honda","Civic",2015, 3000);
+//		cars.add(1, car);
+//		car.addOffer(user1, 2500.00);
+//		car.addOffer(user2, 3500.00);
+//		saveCarList(cars);
+		getCarsListInitial();
 	}
 	
 	@SuppressWarnings("unchecked")

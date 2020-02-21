@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -78,6 +79,7 @@ public class RegistrationDriver implements Serializable{
 				    continue;
 				    
 				}
+			scanner.nextLine();
 			
 			///////////display list of cars on the lot
 			if(userOption == 1) {
@@ -119,24 +121,36 @@ public class RegistrationDriver implements Serializable{
 			}else if(userOption == 3) {
 				System.out.println(b.getCarList()+"userOption 3");
 				if(users.getUser(b).getCarList().size()>=0) {
-				b.getCarList();
-				System.out.println("which car do you want to see payments on?(By Id)");
-				int carId;
-				try{carId = scanner.nextInt();}
-				catch (InputMismatchException e) {
-					logger.warn("user input was incorrect. while entering carId in option 3");
-				    System.err.println("Wrong input! Input only integer numbers please...");
-				    scanner.nextLine();
-				    logger.info("continue on to retry and enter the correct input");
-				    continue;
-				}
-				scanner.nextLine();
-				for(int k=0;k<b.getCarList().size();k++) {
-				if(users.getUser(b).getCarList().get(k).getId()==carId) {}
-				System.out.println(users.getUser(b).getCarList().get(carId).getRemainingBalance());
-				}}else { System.out.println("I'm sorry, you do not own any cars.");
+				System.out.println("Do you want to view your remaining balance?(Y/N)");
+				String userIn = scanner.nextLine();
+				int CarId;
+				if(userIn.equals("y")) {
+					System.out.println("Which car do you want to view the remaining balance on?(Car Id)");
+					CarId = scanner.nextInt();
+					scanner.nextLine();
+					System.out.println(b.getCarById(CarId).getStarterBalance());
+				}else {userOption = 0;continue; }
+				System.out.println("Do you want to view your monthly payment?(Y/N)");
+				userIn = scanner.nextLine().toLowerCase();
+				if(userIn.equals("y")) {
+				System.out.println(b.getCarById(CarId).getPayment());
+				}else {userOption = 0;continue; }
+				System.out.println("Do you want to make a payment?(Y/N)");
+				userIn = scanner.nextLine().toLowerCase();
+				if(userIn.equals("y")) {
+					b.getCarById(CarId).makePayment();
+					users.saveUSer(users.getUserList());
+				System.out.println("payment of "+ b.getCarById(CarId).getPayment()+" was successfully added. Thank you for using Google Pay!");
+				userOption =0;
+				TimeUnit.MILLISECONDS.sleep(2000);
+				logger.info("user finished making a payment");
+				continue;
+				
+				}else {userOption = 0;continue; }
+				}else { System.out.println("I'm sorry, you do not own any cars.");
 						System.out.println("Let's change that! Place an offer on one of the avaiable cars!");
 						userOption =0;}
+				///////////Customer option 4 to exit... save user progress and data.
 			}else if(userOption ==4) {
 				logger.info("User left customer options.");
 				users.saveUSer(users.getUserList());
@@ -144,6 +158,7 @@ public class RegistrationDriver implements Serializable{
 				implCar.saveCarList(implCar.getCarsList());
 				logger.info("Car list saved");
 				userOption =0;
+				TimeUnit.MILLISECONDS.sleep(2000);
 				break;
 			}else {
 				System.out.println("Please choose one of the 4 options...");
@@ -211,12 +226,19 @@ public class RegistrationDriver implements Serializable{
 						 Double offerValue =implCar.getCarById(carId).getValueFromOffers(implCar.getCarById(carId).offers,userInput);
 						 User c = implCar.getCarById(carId).getKeyFromOffer(implCar.getCarById(carId).offers, offerValue);
 						 System.out.println(c);
-
-						 c = justBusiness.acceptOffer(c, implCar.getCarById(carId));
 						 
-						 System.out.println(c);
-						 System.out.println(c.getCarList() + "addcartoUserList 3");
+						 c = justBusiness.acceptOffer(c, implCar.getCarById(carId));
+						 c.setAcceptedOffer(offerValue);
+						 c.getCarById(carId).setPayment(offerValue);
+						 c.getCarById(carId).setCost(offerValue);
+						 c.getCarById(carId).setStarterBalance(offerValue);
+						 System.out.println(c.getCarById(carId).getPayment()+ " carpayment");
+						 logger.info("accepting offer and setting it to user");
+						 logger.debug("trying to debug and get the accepted offer to persist");
 						 users.updateUser(c);
+						 logger.info("updating user information with the car object.");
+						 logger.info("saving user c's state.");
+						 //users.saveUSer((List<User>) users);
 					 }
 					userOption = 0;
 				}else if(userOption == 3) {
@@ -224,7 +246,7 @@ public class RegistrationDriver implements Serializable{
 					userOption =0;
 				}else if(userOption ==4) {
 					implCar.printCarsList();
-					System.out.println("Which car would you like to view the delete?(By Id):");
+					System.out.println("Which car would you like to remove from inventory?(By Id):");
 					int carId = 0;
 					try{carId = scanner.nextInt();}
 					catch (InputMismatchException e) {
@@ -237,7 +259,17 @@ public class RegistrationDriver implements Serializable{
 					 scanner.hasNextLine();
 					implCar.deleteCar(carId);
 					userOption =0;
+					/////Employee Option 5 view all payments
 				}else if(userOption ==5) {
+					for(int k=0; k<users.getUserList().size();k++) {
+						if(users.getUserList().get(k).getUserType()==UserType.CUSTOMER && !users.getUserList().get(k).getCarList().isEmpty()) {
+							System.out.println(users.getUserList().get(k).getFirstName());
+							for(int m=0; m<users.getUserList().get(k).getCarList().size();m++) {
+								System.out.println(users.getUserList().get(k).getCarList().get(m).getStarterBalance() + " Initial balance for "+users.getUserList().get(k).getCarList().get(m));
+								System.out.println("Payments made: " + users.getUserList().get(k).getCarList().get(m).getCarPaymentsMade());
+							}
+						}
+					}
 					userOption =0;
 				}else if(userOption ==6) {
 					logger.info("User left Employee options.");

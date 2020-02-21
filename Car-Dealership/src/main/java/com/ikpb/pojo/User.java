@@ -17,8 +17,9 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private UserType usertype;
-	private int offer;
-	private int makePayment;
+	
+	private double acceptedOffer;
+
 	private List<Car> car = new ArrayList<Car>();
 	public String getFirstName() {
 		return firstName;
@@ -58,9 +59,8 @@ public class User implements Serializable {
 			System.out.println(car);
 		}
 	}
-	public void getCarPaymentsMade(Car car) {
-		System.out.println(car.paymentsMade);
-	}
+
+	
 	public List<Car> getCarList() {
 		return car;
 	}
@@ -76,6 +76,26 @@ public class User implements Serializable {
 	
 	public String logInInfo(String email, String password) {
 		return email + " " + password;
+	}
+	public double getAcceptedOffer() {
+		return acceptedOffer;
+		
+	}
+	public void setAcceptedOffer(double acceptedOffer) {
+		this.acceptedOffer = acceptedOffer;
+	}
+
+
+	public int getId(Car car) {
+		return car.getId();
+	}
+	public Car getCarById(int id) {
+		Car tempCar = new Car();
+		for(int i=0; i<car.size();i++) {
+			if(car.get(i).getId()==id) {
+				tempCar = car.get(i);
+			}
+		}return tempCar;
 	}
 //	public User(String firstName, String lastName, int age, String email, String password) {
 //		super();

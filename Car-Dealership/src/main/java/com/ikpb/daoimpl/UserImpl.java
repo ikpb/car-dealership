@@ -19,11 +19,12 @@ public class UserImpl implements UserDAO{
 	List<User> users;
 	public UserImpl() {
 		super();
-		users = new ArrayList<User>();
-		users.add(new User("Toyoda", "Matrix", "test", "123",UserType.EMPLOYEE));
-		users.add(new User("Sarra", "Conner", "test", "123",UserType.CUSTOMER));
-		users.add(new User("Bri", "Davis", "bob", "123",UserType.CUSTOMER));
-		users.add(new User("Honda", "Civic", "John", "123",UserType.CUSTOMER));
+//		users = new ArrayList<User>();
+//		users.add(new User("toyoda", "Matrix", "test", "123",UserType.EMPLOYEE));
+//		users.add(new User("johny", "twochains", "john", "123",UserType.CUSTOMER));
+//		users.add(new User("bri", "Davis", "bob", "123",UserType.CUSTOMER));
+//		users.add(new User("mark", "parez", "mark", "123",UserType.CUSTOMER));
+//		saveUSer(users);
 		getAllUsers();
 	}
 	

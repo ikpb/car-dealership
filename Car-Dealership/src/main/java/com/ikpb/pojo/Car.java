@@ -23,17 +23,53 @@ public class Car implements Serializable{
 	private String model;
 	private int year;
 	private double cost;
+	private int offer;
+	private int makePayment;
+	private double payment;
+	private List<Double> payments_ = new ArrayList<Double>();
+	private double remainingBalance;
+	private double starterBalance;
 	private static int id =0;
 	private int carId;
-	private double acceptedOffer;
-	private double payment;
-	private double remainingBalance;
 	private boolean isCarAvaliable;
 	public Map<User, Double> offers = new HashMap<User,Double>();//make a list of customer objects in 
 	
-	public List<Double> paymentsMade = new ArrayList<>();
-	public List<Double> getPaymentsMade() {
-		return paymentsMade;
+	public List<Double> getCarPaymentsMade() {
+		System.out.println(this.payments_);
+		return payments_;
+	}	
+	public double getPayment() {
+		return payment;
+	}
+
+	public void setPayment(double acceptedOffer) {
+		
+		
+		this.payment = acceptedOffer/60;
+	}
+	public double getRemainingBalance() {
+		return remainingBalance;
+	}
+
+	public void setRemainingBalance() {
+		
+		this.remainingBalance = this.makePayment();
+	}
+	
+	public double getStarterBalance() {
+		return starterBalance;
+	}
+	public void setStarterBalance(double starterBalance) {
+		this.starterBalance = starterBalance;
+	}
+	public double makePayment(){
+		double paymentmade = 0;
+		if(this.getStarterBalance() - this.payment>=0) {
+			paymentmade = this.getStarterBalance() - this.payment;
+		}
+		this.payments_.add(this.payment);
+		setStarterBalance(paymentmade);
+		return paymentmade;
 	}
 	public Map<User, Double> getOffers() {
 		return offers;
@@ -47,10 +83,6 @@ public class Car implements Serializable{
 	}
 	public void clearOffers() {
 		this.offers.clear();
-	}
-
-	public void setPaymentsMade(List<Double> paymentsMade) {
-		this.paymentsMade = paymentsMade;
 	}
 	public Double getValueFromOffers(Map<User, Double> offer, String user) {
 		double tempDouble = 0;
@@ -73,22 +105,7 @@ public class Car implements Serializable{
 			return tempUser;
 		}
 	
-	public double getAcceptedOffer() {
-		return acceptedOffer;
-		
-	}
-	public void setAcceptedOffer(double acceptedOffer) {
-		this.acceptedOffer = acceptedOffer;
-	}
-
-	public double getRemainingBalance() {
-		return remainingBalance;
-	}
-
-	public void setRemainingBalance() {
-		
-		this.remainingBalance = this.makePayment();
-	}
+	
 
 	public boolean isCarAvaliable() {
 		return isCarAvaliable;
@@ -127,23 +144,7 @@ public class Car implements Serializable{
 		this.carId = id;
 	}
 
-	public double getPayment() {
-		return payment;
-	}
 
-	public void setPayment(double acceptedOffer) {
-		
-		
-		this.payment = acceptedOffer/60;
-	}
-	public double makePayment(){
-		double paymentmade = 0;
-		if(this.remainingBalance - this.payment>=0) {
-			paymentmade = this.remainingBalance - this.payment;
-		}
-		this.paymentsMade.add(payment);
-		return paymentmade;
-	}
 
 	
 	@Override

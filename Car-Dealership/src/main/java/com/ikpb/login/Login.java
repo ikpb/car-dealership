@@ -27,7 +27,7 @@ public class Login {
 				
 				if(email.equals(user.getUserList().get(i).getEmail()) && password.equals(user.getUserList().get(i).getPassword()) && userType.equals(user.getUserList().get(i).getUserType())){
 					System.out.println("userfound");
-					logInInfo = new User(user.getUserList().get(i).getFirstName(), user.getUserList().get(i).getLastName(), user.getUserList().get(i).getEmail(),user.getUserList().get(i).getUserType());
+					logInInfo = user.getUser(user.getUserList().get(i));
 					break;
 				}else {
 					logInInfo = new User(UserType.NEW_USER);

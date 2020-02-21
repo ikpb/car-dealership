@@ -24,6 +24,7 @@ public class CarImpl implements CarDao{
 	List<Car> cars = new ArrayList<Car>();
 	public CarImpl() {
 		super();
+		getCarsListInitial();
 		User user1 = new User("Toyoda", "Matrix", "bob", "123",UserType.CUSTOMER);
 		User user2 = new User("Honda", "Civic", "John", "123",UserType.CUSTOMER);
 		cars = new ArrayList<Car>();
@@ -32,7 +33,7 @@ public class CarImpl implements CarDao{
 		cars.add(1, car);
 		car.addOffer(user1, 2500.00);
 		car.addOffer(user2, 3500.00);
-		getCarsListInitial();
+		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -73,10 +74,12 @@ public class CarImpl implements CarDao{
 	}
 
 	public List<Car> getCarsList(){
-		for(Car x: cars) {
+		return cars;
+	}
+	public void printCarsList(){
+		for (Car x: cars) {
 			System.out.println(x);
 		}
-		return cars;
 	}
 	@Override
 	public void addCar() {
@@ -92,6 +95,7 @@ public class CarImpl implements CarDao{
 		scan.hasNextLine();
 		Car car = new Car(make,model,year,cost);
 		cars.add(car);
+		saveCarList(cars);
 	}
 
 	@Override

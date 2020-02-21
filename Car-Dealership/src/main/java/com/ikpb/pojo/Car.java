@@ -52,9 +52,30 @@ public class Car implements Serializable{
 	public void setPaymentsMade(List<Double> paymentsMade) {
 		this.paymentsMade = paymentsMade;
 	}
+	public Double getValueFromOffers(Map<User, Double> offer, String user) {
+		double tempDouble = 0;
+	for (Map.Entry<User, Double> entry : offers.entrySet()) {
+			User key=entry.getKey();
+			
+		if (key.getFirstName().contains(user)) {
+				tempDouble= entry.getValue();
+			}
+		}
+		return tempDouble;
+	}
+	public User getKeyFromOffer(Map<User, Double> offer, Double value) {
+			User tempUser = new User();
+		for (Map.Entry<User, Double> entry : offers.entrySet()) {
+				if (value.equals(entry.getValue())) {
+					tempUser= entry.getKey();
+				}
+			}
+			return tempUser;
+		}
 	
 	public double getAcceptedOffer() {
 		return acceptedOffer;
+		
 	}
 	public void setAcceptedOffer(double acceptedOffer) {
 		this.acceptedOffer = acceptedOffer;
@@ -162,6 +183,10 @@ public class Car implements Serializable{
 		this.cost = cost;
 		this.isCarAvaliable = true;
 		setID();
+	}
+	public Double getValueFromOffer(double offerId, Car carById) {
+		return carById.offers.get(offerId);
+		
 	}
 	
 }

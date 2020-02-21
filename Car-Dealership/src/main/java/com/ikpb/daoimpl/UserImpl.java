@@ -21,8 +21,8 @@ public class UserImpl implements UserDAO{
 		super();
 		users = new ArrayList<User>();
 		users.add(new User("Toyoda", "Matrix", "test", "123",UserType.EMPLOYEE));
-		users.add(new User("Toyoda", "Matrix", "test", "123",UserType.CUSTOMER));
-		users.add(new User("Toyoda", "Matrix", "bob", "123",UserType.CUSTOMER));
+		users.add(new User("Sarra", "Conner", "test", "123",UserType.CUSTOMER));
+		users.add(new User("Bri", "Davis", "bob", "123",UserType.CUSTOMER));
 		users.add(new User("Honda", "Civic", "John", "123",UserType.CUSTOMER));
 		getAllUsers();
 	}
@@ -89,8 +89,9 @@ public class UserImpl implements UserDAO{
 		}else {
 			b = UserType.EMPLOYEE;
 		}
+		getAllUsers();
 		users.add(new User(firstName, lastName,email,password,b));
-		
+		saveUSer(users);
 		
 	}
 
@@ -133,6 +134,19 @@ public class UserImpl implements UserDAO{
 			}
 		}
 		return u;
+	}
+	public void updateUser(User user) {
+		System.out.println(user);
+		System.out.println(user.getCarList()+"inside userimpl");
+		for(int i=0; i<users.size();i++) {
+			if(users.get(i).getEmail().contentEquals(user.getEmail())) {
+				String tempString = users.get(i).getPassword();
+				users.set(i, user);
+				users.get(i).setPassword(tempString);
+				users.get(i).getCarList();
+				System.out.println(users.get(i).getCarList() + "inside userimpl after change over");
+			}
+		}
 	}
 
 	@Override

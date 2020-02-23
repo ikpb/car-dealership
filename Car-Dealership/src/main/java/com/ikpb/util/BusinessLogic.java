@@ -22,11 +22,11 @@ public Car placeOffer(User user, Car car,boolean activity, double d) {
 public User addCarToUserList(User usez, Car carz){
 	usez.setCar(usez.getCarList());
 	usez.getCarList();
-	System.out.println(usez + "add to car userList");
+	//add logger commit
 	usez.addCartoList(carz);
 	carz.setCarAvaliable(false);
 	carz.clearOffers();
-	System.out.println(usez.getCarList() + "addcartoUserList");
+
 	return usez;
 }
 public void viewOwnedCars(User usez) {
@@ -51,8 +51,7 @@ public User acceptOffer(User firstName,Car carz )
 	System.out.println("Great! You picked an offer!");
 	tempUser = addCarToUserList(firstName, carz);
 	System.out.println("The car has been placed in " + firstName.getFirstName()+"\'s" + " Garage ");
-	System.out.println(tempUser + "tempuser being passed");
-	System.out.println(tempUser.getCarList() + "addcartoUserList 2");
+
 	return tempUser;
 }
 public void viewAllPayments(List<User> users) {

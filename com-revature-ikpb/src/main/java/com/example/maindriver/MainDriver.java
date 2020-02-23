@@ -16,7 +16,7 @@ public class MainDriver {
 		System.out.println(petDaoImpl.selectPetByName("Siri"));
 
 //		//to update pet
-		petOne.setType("The Pupper");s
+		petOne.setType("The Pupper");
 		petDaoImpl.updatePet(petOne);
 //		
 //		System.out.println(petDaoImpl.selectAllPets());

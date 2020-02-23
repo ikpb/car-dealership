@@ -4,7 +4,9 @@ import com.ikpb.dao.UserDAO;
 import com.ikpb.pojo.Car;
 import com.ikpb.pojo.User;
 import com.ikpb.pojo.User.UserType;
-
+import java.util.logging.LogManager;
+import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.Logger;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,7 +16,15 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
 public class UserImpl implements UserDAO{
+	private static final Logger logger = Logger.getLogger(UserImpl.class);
 	
 	List<User> users;
 	public UserImpl() {

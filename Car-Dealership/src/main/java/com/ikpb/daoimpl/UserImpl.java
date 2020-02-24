@@ -25,62 +25,58 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 public class UserImpl implements UserDAO{
 	private static final Logger logger = Logger.getLogger(UserImpl.class);
-	
-	List<User> users;
-	public UserImpl() {
-		super();
-//		users = new ArrayList<User>();
+	private static String url ="jdbc:postgresql://localhost:5000/dealership";
+	//jdbc:postgresql://host:port/database_name
+	private static String username="postgres";
+	private static String password="root";
+	List<User> users = new ArrayList<User>();
+//	public UserImpl() {
+//		super();
+//		users ;
 //		users.add(new User("toyoda", "Matrix", "test", "123",UserType.EMPLOYEE));
 //		users.add(new User("johny", "twochains", "john", "123",UserType.CUSTOMER));
 //		users.add(new User("bri", "Davis", "bob", "123",UserType.CUSTOMER));
 //		users.add(new User("mark", "parez", "mark", "123",UserType.CUSTOMER));
 //		saveUSer(users);
-		getAllUsers();
-	}
+//		getAllUsers();
+//	}
 	
-
+//// retrieves all of the users from the database
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAllUsers() {
-		String filename;
-		filename = "users.dat";
-		FileInputStream fis = null;
-		ObjectInputStream ois = null;
-		
-		try {
-			fis = new FileInputStream(filename);
-			ois = new ObjectInputStream(fis);
+		List <User> tempListUsers = new ArrayList<User>();
+		try{
+			Connection conn = DriverManager.getConnection(url,username,password);
+			//putting in a native sql query utilizing a perpared statemnt
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM appuser");
+			ResultSet rs = ps.executeQuery();
+			//we are executing the query and storing the result set in 
+			//a Resultset
+			while(rs.next()) {
+				tempListUsers.add(new User(rs.getString("firstname"), rs.getString("lastname"),rs.getString("email"),rs.getString("password"), (UserType)rs.getObject("usertype")));
+			}
 			
-				try {
-				users = (List<User>)ois.readObject();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-		} catch (FileNotFoundException e) {
+			ps.execute();
+			//allows us to execute a query without a result
+			conn.close();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				ois.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				fis.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}	
-		return users;
+		}return tempListUsers;
 	}
 
+	
+	////returns the program side of the userlist
+	////////////////////
 	@Override
 	public List<User> getUserList() {
 		return users;
 	}
 
+	
+	////adds user to the data base
+	///////////////////
 	@Override
 	public void addUser() {
 		Scanner scan = new Scanner(System.in);
@@ -91,7 +87,7 @@ public class UserImpl implements UserDAO{
 		System.out.println("Enter your Email (This will be your Username): ");
 		String email = scan.nextLine();
 		System.out.println("Please enter a Password");
-		String password = scan.nextLine();
+		String passwords = scan.nextLine();
 		System.out.println("Are you a 1. Customer or 2. Employee (Press 1 or 2):");
 		int userType = scan.nextInt();
 		UserType b = UserType.NEW_USER;
@@ -100,44 +96,66 @@ public class UserImpl implements UserDAO{
 		}else {
 			b = UserType.EMPLOYEE;
 		}
-		getAllUsers();
-		users.add(new User(firstName, lastName,email,password,b));
-		saveUSer(users);
-		
-	}
-
-	@Override
-	public void saveUSer(List<User> user) {
-		String filename;
-		filename = "users.dat";
-		FileOutputStream fos = null;
-		ObjectOutputStream oos = null;
-		try {
-			fos = new FileOutputStream(filename);
-			oos = new ObjectOutputStream(fos);
-			oos.writeObject(user);
-			
-		} catch (FileNotFoundException e) {
+		//while adding the user to the database we will also add the list
+		users.add(new User(firstName, lastName,email,passwords,b));
+		try{
+			Connection conn = DriverManager.getConnection(url,username,password);
+			//puttingn in a native sql query utilizing a perpared statemtn
+			PreparedStatement ps = conn.prepareStatement("Insert INTO appuser VALUES(?,?,?,?,?)");
+			ps.setString(1,firstName);
+			//seting the first question mark to be the name that is passed as
+			//paramenter, that belongs to our user object
+			ps.setString(2,lastName);
+			//setting the second question mark to be the type that belongs
+			//to our user object
+			ps.setString(3,email);
+			//seting the third question mark to be the name that is passed as
+			//paramenter, that belongs to our user object
+			ps.setString(4,passwords);
+			//setting the fouth question mark to be the type that belongs
+			//to our user object
+			ps.setString(5, b.toString());
+			//setting the fifth question mark to be the type that belongs
+			//to our user object
+			ps.execute();
+			//allows us to execute a query without a result
+			conn.close();
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				fos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
+	}
+///save the current list of users back to the database/ update users in the database
+	@Override
+	public void updateUser(User u) {
+		try{
+			Connection conn = DriverManager.getConnection(url,username,password);
+			//putting in a native sql query utilizing a perpared statemnt
+			PreparedStatement ps = conn.prepareStatement("UPDATE appuser SET firstname=?, lastname=?,password=?, usertype=? WHERE email=?");
+			ps.setString(1, u.getFirstName());
+			ps.setString(2, u.getLastName());
+			ps.setString(3, u.getPassword());
+			ps.setObject(4, u.getUserType().toString());
+			ps.setObject(5, u.getEmail());
+			ResultSet rs = ps.executeQuery();
+			//we are executing the query and storing the result set in 
+			//a Resultset
+			ps.execute();
+			//allows us to execute a query without a result
+			conn.close();
+	
+		
+	}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 		
 	}
-
+////////// get a user from the program list.
+	////////////////////
 	@Override
-	public User getUser(User user) {
+	public User getUserProgram(User user) {
 		User u = new User();
 		for(int j=0;j<users.size();j++) {
 			if(users.get(j).equals(user)) {
@@ -146,7 +164,35 @@ public class UserImpl implements UserDAO{
 		}
 		return u;
 	}
-	public void updateUser(User user) {
+	///////retrieve a user from the database
+	///////////////////
+	public User getUserDB(User user) {
+		User tempUser = null;
+		try{
+			Connection conn = DriverManager.getConnection(url,username,password);
+			//putting in a native sql query utilizing a perpared statemnt
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM appuser WHERE email=?");
+			ps.setString(1, user.getEmail());
+			ResultSet rs = ps.executeQuery();
+			//we are executing the query and storing the result set in 
+			//a Resultset
+			while(rs.next()) {
+				tempUser = new User(rs.getString("firstname"), rs.getString("lastname"),rs.getString("email"),rs.getString("password"), (UserType)rs.getObject("usertype"));
+			}
+			ps.execute();
+			//allows us to execute a query without a result
+			conn.close();
+	
+		
+	}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		return tempUser;
+	}
+	////update a users info without sending into to the database/soft update.
+	/////////////////
+	public void updateUserProgram(User user) {
 		System.out.println(user);
 		System.out.println(user.getCarList()+"inside userimpl");
 		for(int i=0; i<users.size();i++) {
@@ -161,12 +207,19 @@ public class UserImpl implements UserDAO{
 	}
 
 	@Override
-	public void deleteLastUser() {
-	
-			users.remove(users.size()-1);
-		
-		
-		
+	public void deleteUser(User user) {
+		try{
+			Connection conn = DriverManager.getConnection(url,username,password);
+			//putting in a native sql query utilizing a perpared statemnt
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM appuser WHERE email=?");
+			ps.setString(1, user.getEmail());
+			ps.executeUpdate();
+			//allows us to execute a query without a result
+			conn.close();
+	}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 
 }
 }

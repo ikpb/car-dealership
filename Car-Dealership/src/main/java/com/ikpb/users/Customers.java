@@ -37,7 +37,7 @@ public class Customers extends User implements CustomersDAO {
 	scan.nextLine();
 	for(int i=0; i<car.getCarsList().size(); i++) {
 		if(car.getCarsList().get(i).getId() == CarId) {
-			car.getCarsList().get(i).setOffer(offerAmount);
+			//car.getCarsList().get(i).setOffer(offerAmount);
 		}
 		}
 		
@@ -49,7 +49,7 @@ public class Customers extends User implements CustomersDAO {
 		this();
 		setFirstName(firstName);
 		setLastName(lastName);
-		setAge(age);
+		//setAge(age);
 		setUserType(user);
 		
 	}

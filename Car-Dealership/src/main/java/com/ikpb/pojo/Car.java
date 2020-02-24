@@ -16,28 +16,40 @@ public class Car implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Car ID:" + this.getId() + " Car Make:" + make + ", Model:" + model + ", Year:" + year + ", Cost:" + cost;
+		return "Car Vin:" + vin + " Car Make:" + make + ", Model:" + model + ", Year:" + year + ", Cost:" + cost;
 	}
 	
 	private String make;
 	private String model;
 	private int year;
 	private double cost;
+	private String vin;
 	private int offer;
 	private int makePayment;
 	private double payment;
 	private List<Double> payments_ = new ArrayList<Double>();
 	private double remainingBalance;
 	private double starterBalance;
-	private static int id =0;
-	private int carId;
 	private boolean isCarAvaliable;
+	private String owner;
 	public Map<User, Double> offers = new HashMap<User,Double>();//make a list of customer objects in 
 	
 	public List<Double> getCarPaymentsMade() {
 		System.out.println(this.payments_);
 		return payments_;
 	}	
+	
+	
+	public String getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+
 	public double getPayment() {
 		return payment;
 	}
@@ -46,6 +58,13 @@ public class Car implements Serializable{
 		
 		
 		this.payment = acceptedOffer/60;
+	}
+	
+	public String getVin() {
+		return vin;
+	}
+	public void setVin(String vin) {
+		this.vin = vin;
 	}
 	public double getRemainingBalance() {
 		return remainingBalance;
@@ -114,7 +133,9 @@ public class Car implements Serializable{
 	public void setCarAvaliable(boolean isCarAvaliable) {
 		this.isCarAvaliable = isCarAvaliable;
 	}
-
+public String getMake() {
+	return make;
+}
 	public void setMake(String make) {
 		this.make = make;
 	}
@@ -136,13 +157,8 @@ public class Car implements Serializable{
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
-	public int getId() {
-		return carId;
-	}
-	private void setID() {
-		id++;
-		this.carId = id;
-	}
+
+
 
 
 
@@ -176,14 +192,15 @@ public class Car implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Car(String make, String model, int year, double cost) {
+	public Car(String vin, String make, String model, int year, double cost, boolean avaliable) {
 		super();
 		this.make = make;
 		this.model = model;
 		this.year = year;
 		this.cost = cost;
-		this.isCarAvaliable = true;
-		setID();
+		this.vin = vin;
+		this.isCarAvaliable = avaliable;
+
 	}
 	public Double getValueFromOffer(double offerId, Car carById) {
 		return carById.offers.get(offerId);

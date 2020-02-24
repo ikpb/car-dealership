@@ -120,7 +120,7 @@ public class RegistrationDriver implements Serializable{
 			/////////////View cars in customers garage
 			}else if(userOption == 3) {
 				System.out.println(b.getCarList()+"userOption 3");
-				if(users.getUser(b).getCarList().size()>=0) {
+				if(users.getUserProgram(b).getCarList().size()>=0) {
 				System.out.println("Do you want to view your remaining balance?(Y/N)");
 				String userIn = scanner.nextLine();
 				int CarId;
@@ -139,7 +139,6 @@ public class RegistrationDriver implements Serializable{
 				userIn = scanner.nextLine().toLowerCase();
 				if(userIn.equals("y")) {
 					b.getCarById(CarId).makePayment();
-					users.saveUSer(users.getUserList());
 				System.out.println("payment of "+ b.getCarById(CarId).getPayment()+" was successfully added. Thank you for using Google Pay!");
 				userOption =0;
 				TimeUnit.MILLISECONDS.sleep(2000);
@@ -153,7 +152,7 @@ public class RegistrationDriver implements Serializable{
 				///////////Customer option 4 to exit... save user progress and data.
 			}else if(userOption ==4) {
 				logger.info("User left customer options.");
-				users.saveUSer(users.getUserList());
+				////add user save method here;
 				logger.info("Users saved");
 				implCar.saveCarList(implCar.getCarsList());
 				logger.info("Car list saved");
@@ -246,18 +245,10 @@ public class RegistrationDriver implements Serializable{
 					userOption =0;
 				}else if(userOption ==4) {
 					implCar.printCarsList();
-					System.out.println("Which car would you like to remove from inventory?(By Id):");
-					int carId = 0;
-					try{carId = scanner.nextInt();}
-					catch (InputMismatchException e) {
-						logger.warn("user input was incorrect. while entering carId in option 3");
-					    System.err.println("Wrong input! Input only integer numbers please...");
-					    scanner.nextLine();
-					    logger.info("continue on to retry and enter the correct input");
-					    continue;
-					}
-					 scanner.hasNextLine();
-					implCar.deleteCar(carId);
+					System.out.println("Which car would you like to remove from inventory?(By Vin):");
+					String carVin = "";
+					carVin = scanner.nextLine();
+					implCar.deleteCar(carVin);
 					userOption =0;
 					/////Employee Option 5 view all payments
 				}else if(userOption ==5) {
@@ -273,7 +264,7 @@ public class RegistrationDriver implements Serializable{
 					userOption =0;
 				}else if(userOption ==6) {
 					logger.info("User left Employee options.");
-					users.saveUSer(users.getUserList());
+					///add a user save method here
 					logger.info("Users saved");
 					implCar.saveCarList(implCar.getCarsList());
 					logger.info("Car list saved");
@@ -289,7 +280,7 @@ public class RegistrationDriver implements Serializable{
 		}else if(userOption == 3) {
 			
 			users.addUser();
-			users.saveUSer(users.getUserList());
+			//add a usersave method here
 			userOption = 0;
 		}else if(userOption == 4) {
 			//exit system

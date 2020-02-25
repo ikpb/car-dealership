@@ -21,6 +21,8 @@ public class BusinessLogic {
 	CarImpl carImpl = new CarImpl();
 	UserImpl users = new UserImpl();
 	UserServiceImpl userserve = new UserServiceImpl();
+	////Allow user to place an offer a database
+	////////////////////////////////////////////
 public String placeOffer(User user, Car car,boolean activity, double d) {
 	String tempString = "";
 	if(car.isCarAvaliable()) {
@@ -32,21 +34,25 @@ public String placeOffer(User user, Car car,boolean activity, double d) {
 	}
 	return tempString;
 }	
-	
+////Set car values and add to database
+////////////////////////////////////////////
 public User addCarToUserList(User usez, Car carz, double offer){
 
 	//add logger commit
 	usez.setAcceptedOffer(offer);
 	usez.getCarByVin(carz.getVin()).setPayment(offer);
-	usez.getCarByVin(carz.getVin()).setCost(offer);
 	usez.getCarByVin(carz.getVin()).setStarterBalance(offer);
 	carz.setOwner(usez.getEmail());
 	carz.setCarAvaliable(false);
+	carz.setCost(offer);
 	carz.clearOffers();
+	carz.setPayment(offer);
 	carImpl.updateCar(carz);
 	userserve.createUserGarage(usez.getEmail(), carz);
 	return usez;
 }
+////Get the list of cars owned by user from database
+////////////////////////////////////////////////////
 public List<Car> getUserCarList(String email){
 	List<Car> tempCarList = new ArrayList<Car>();
 	try{
@@ -71,7 +77,10 @@ public List<Car> getUserCarList(String email){
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}return tempCarList;
-}public int getUserCarCost(String email, String vin){
+}
+////Get the cost a car a user is paying on
+////////////////////////////////////////////////////
+public int getUserCarCost(String email, String vin){
 
 		int j =0;
 	try{
@@ -96,6 +105,8 @@ public List<Car> getUserCarList(String email){
 		e.printStackTrace();
 	}return j;
 }
+////Get total left to pay on a car
+////////////////////////////////////////////////////
 public int getCarAmountLeft(String email, String vin){
 		int j =0;
 	try{
@@ -120,6 +131,8 @@ public int getCarAmountLeft(String email, String vin){
 		e.printStackTrace();
 	}return j;
 }
+////Get the list of monthly payments made by user
+////////////////////////////////////////////////////
 public List<Integer> getCarPaymentList(String email, String vin){
 	List<Integer> j = new ArrayList<Integer>();
 
@@ -133,7 +146,7 @@ try{
 	//we are executing the query and storing the result set in 
 	//a Resultset
 	while(rs.next()) {
-		j.add(rs.getInt("totalleft"));
+		j.add(rs.getInt("paymentamount"));
 	}
 	
 	ps.execute();
@@ -145,6 +158,51 @@ catch (SQLException e) {
 	e.printStackTrace();
 }return j;
 }
+////Get the monthly payment of a car for a user
+////////////////////////////////////////////////////
+public void printCustomerPaymentList(String email, String vin) {
+	List<Integer> j = new ArrayList<Integer>();
+	j=getCarPaymentList(email,vin);
+	for (Integer x: j) {
+		System.out.println("User Id: "+ email + "made the payment of " + x);
+}
+}
+public List<Car> getCustomerCarListByEmail(String email) {
+	List<Car> carz = new ArrayList<Car>();
+	try{
+		Connection conn =  ConnectionFactory.getConnection();
+		//putting in a native sql query utilizing a prepared statement
+		PreparedStatement ps = conn.prepareStatement("Select * from car where owner=?");
+		ps.setString(1, email);
+		ResultSet rs = ps.executeQuery();
+		//we are executing the query and storing the result set in 
+		//a Resultset
+		while(rs.next()) {
+			
+			carz.add(new Car(rs.getString("vin"),rs.getString("make"),rs.getString("model"),rs.getInt("year"), rs.getDouble("price"),rs.getBoolean("isavaliable")));
+		
+		}
+		ps.execute();
+		//allows us to execute a query without a result
+		conn.close();
+	} 
+	catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return carz;
+	
+}
+public void printCustomerCarList(String email) {
+	List<Car>a=getCustomerCarListByEmail(email);
+	List<Car> tempList = new ArrayList<Car>();
+	tempList = a;
+	for(Car x: tempList) {
+		System.out.println(x);
+	}
+}
+////Get the monthly payment of a car for a user
+////////////////////////////////////////////////////
 public int myMonthlyPayment(String email, String vin) {
 	int j =0;
 	try{
@@ -169,21 +227,25 @@ public int myMonthlyPayment(String email, String vin) {
 		e.printStackTrace();
 	}return j;
 }
+////Get the list of cars owned by user from database
+////////////////////////////////////////////////////
 public String makeMonthlyPayment(String email, String vin) {
-	String j ="";
+	int j =0;
+	int a =getCarAmountLeft(email, vin);
+	int b = myMonthlyPayment(email, vin);
+	 int totalLeftAfterPayment = a-b;
 	try{
 		Connection conn =  ConnectionFactory.getConnection();
 		//putting in a native sql query utilizing a prepared statement
-		PreparedStatement ps = conn.prepareStatement("insert into payment ()serid=? and carid=?");
+		PreparedStatement ps = conn.prepareStatement("insert into payment (userid, totalleft,paymentamount, carid)"
+				+ " values (?,?,?,?)");
 		ps.setString(1, email);
-		ps.setString(2, vin);
-		ResultSet rs = ps.executeQuery();
+		ps.setInt(2, totalLeftAfterPayment);
+		ps.setInt(3, b);
+		ps.setString(4, vin);
+		int rs = ps.executeUpdate();
 		//we are executing the query and storing the result set in 
 		//a Resultset
-		while(rs.next()) {
-			j=rs.getInt("paymentamount");
-		}
-		
 		ps.execute();
 		//allows us to execute a query without a result
 		conn.close();
@@ -191,7 +253,8 @@ public String makeMonthlyPayment(String email, String vin) {
 	catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}return j;
+	} String e = "Your payment was made successfully";
+	return e;
 }
 
 public void viewOwnedCars(User usez) {

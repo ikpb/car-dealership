@@ -131,18 +131,18 @@ public class RegistrationDriver implements Serializable{
 				if(userIn.equals("y")) {
 					System.out.println("Which car do you want to view the remaining balance on?(Car Vin)");
 					carVin = scanner.nextLine();
-					System.out.println(b.getCarByVin(carVin).getStarterBalance());
+					System.out.println(justBusiness.getCarAmountLeft(b.getEmail(),carVin));
 				}else {userOption = 0;continue; }
 				System.out.println("Do you want to view your monthly payment?(Y/N)");
 				userIn = scanner.nextLine().toLowerCase();
 				if(userIn.equals("y")) {
-				System.out.println(b.getCarByVin(carVin).getPayment());
+				System.out.println(justBusiness.myMonthlyPayment(b.getEmail(),carVin));
 				}else {userOption = 0;continue; }
 				System.out.println("Do you want to make a payment?(Y/N)");
 				userIn = scanner.nextLine().toLowerCase();
 				if(userIn.equals("y")) {
-					b.getCarByVin(carVin).makePayment();
-				System.out.println("payment of "+ b.getCarByVin(carVin).getPayment()+" was successfully added. Thank you for using Google Pay!");
+					justBusiness.makeMonthlyPayment(b.getEmail(),carVin);
+				System.out.println("payment of "+ justBusiness.myMonthlyPayment(b.getEmail(),carVin)+" was successfully added. Thank you for using Google Pay!");
 				userOption =0;
 				TimeUnit.MILLISECONDS.sleep(1500);
 				logger.info("user finished making a payment");
@@ -221,7 +221,7 @@ public class RegistrationDriver implements Serializable{
 						 System.out.println("Which offer do you want to accept?(Input User Id)");
 						 String userInput ="";
 						 try{userInput= scanner.nextLine();}
-						 catch(NullPointerException e) {System.out.println();}
+						 catch(NullPointerException e) {System.out.println(e);}
 						 //cycle through list and match the car user input with the user with the same as the offer and pass that user in
 						 Double offerValue =implCar.getCarById(carId).getValueFromOffers(implCar.getCarById(carId).offers,userInput);
 						 //gets users email
@@ -231,10 +231,10 @@ public class RegistrationDriver implements Serializable{
 						 User c = new User();
 						 UserImpl tempUse = new UserImpl();
 						 c=tempUse.getUserDB(offerPlacer);
-						 System.out.println(c.toString()+ "trying to see if c got all the user attributes from" + offerPlacer);
+						 System.out.println(c.toString()+ "trying to see if c got all the user attributes from" + offerPlacer + " "+offerValue);
 						 c = justBusiness.acceptOffer( c, implCar.getCarById(carId), offerValue);
 						 
-						 System.out.println(c.getCarByVin(carId).getPayment()+ " carpayment");
+						 System.out.println(justBusiness.getUserCarCost(c.getEmail(), carId)+ " carpayment");
 						 logger.info("accepting offer and setting it to user");
 						 logger.debug("trying to debug and get the accepted offer to persist");
 						 users.updateUserProgram(c);
@@ -261,15 +261,15 @@ public class RegistrationDriver implements Serializable{
 					/////Employee Option 5 view all payments
 					/////////////////////////////////////////
 				}else if(userOption ==5) {
-					for(int k=0; k<users.getUserList().size();k++) {
-						if(users.getUserList().get(k).getUserType()==UserType.CUSTOMER && !users.getUserList().get(k).getCarList().isEmpty()) {
-							System.out.println(users.getUserList().get(k).getFirstName());
-							for(int m=0; m<users.getUserList().get(k).getCarList().size();m++) {
-								System.out.println(users.getUserList().get(k).getCarList().get(m).getStarterBalance() + " Initial balance for "+users.getUserList().get(k).getCarList().get(m));
-								System.out.println("Payments made: " + users.getUserList().get(k).getCarList().get(m).getCarPaymentsMade());
-							}
-						}
-					}
+					users.printCustomerList();
+					System.out.println("Which offer do you want to accept?(Input User Id)");
+					 String userInput= scanner.nextLine();
+					 justBusiness.printCustomerCarList(userInput);
+					 System.out.println("Which car do you want to view payments on?(Input Cars Vin)");
+					  String userInputVin="";
+					 try{userInputVin = scanner.nextLine();}
+					 catch(NullPointerException e) {System.out.println(e);}
+					 justBusiness.printCustomerPaymentList(userInput, userInputVin);
 					userOption =0;
 					////Employee Option 6 Exit Program
 					////////////////////////////////////////////

@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 			ps.setDouble(2, car.getCost());
 			ps.setDouble(3, car.getPayment());
 			ps.setString(4, car.getVin());
-			ResultSet rs = ps.executeQuery();
+			ps.executeUpdate();
 			//we are executing the query and storing the result set in 
 			//a Resultset
 //			while(rs.next()) {

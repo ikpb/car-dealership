@@ -50,7 +50,7 @@ public class UserImpl extends User implements UserDAO {
 		List <User> tempListUsers = new ArrayList<User>();
 		try{
 			Connection conn = ConnectionFactory.getConnection();
-			//putting in a native sql query utilizing a perpared statemnt
+			//putting in a native sql query utilizing a prepared statement
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM appuser");
 			ResultSet rs = ps.executeQuery();
 			//we are executing the query and storing the result set in 
@@ -67,10 +67,39 @@ public class UserImpl extends User implements UserDAO {
 			e.printStackTrace();
 		}return tempListUsers;
 	}
+	public List<User> getAllCustomers() {
+		List <User> tempListUsers = new ArrayList<User>();
+		try{
+			Connection conn = ConnectionFactory.getConnection();
+			//putting in a native sql query utilizing a prepared statement
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM appuser where usertype=?");
+			ps.setString(1, "CUSTOMER");
+			ResultSet rs = ps.executeQuery();
+			//we are executing the query and storing the result set in 
+			//a Resultset
+			while(rs.next()) {
+				tempListUsers.add(new User(rs.getString("firstname"), rs.getString("lastname"),rs.getString("email"),rs.getString("password"), User.UserType.CUSTOMER));
+			}
+			
+			ps.execute();
+			//allows us to execute a query without a result
+			conn.close();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}return tempListUsers;
+	}
 
+public void printCustomerList() {
+	List<User> tempList = new ArrayList<User>();
+	tempList = getAllCustomers();
+	for (User x: tempList) {
+		System.out.println("User Id: "+ x.getEmail()+ " First Name: " + x.getFirstName()+ " Last Name: " + x.getLastName());
+}
+	}
 	
-	////returns the program side of the userlist
-	////////////////////
+	////returns the program side of the user list
+	////////////////////////////////////////////////
 	@Override
 	public List<User> getUserList() {
 		return users;
@@ -78,7 +107,7 @@ public class UserImpl extends User implements UserDAO {
 
 	
 	////adds user to the data base
-	///////////////////
+	/////////////////////////////
 	@Override
 	public void addUser() {
 		Scanner scan = new Scanner(System.in);

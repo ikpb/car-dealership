@@ -256,13 +256,13 @@ public class CarImpl implements CarDao{
 	@Override public void updateCar(Car car) {
 		try{
 			Connection conn = ConnectionFactory.getConnection();
-			//putting in a native sql query utilizing a perpared statemnt
+			//putting in a native sql query utilizing a prepared statement
 			PreparedStatement ps = conn.prepareStatement("UPDATE car SET price=?, owner=?, isavaliable=?  WHERE vin=?");
 			ps.setDouble(1, car.getCost());
 			ps.setString(2,  car.getOwner());
 			ps.setBoolean(3, car.isCarAvaliable());
 			ps.setObject(4,  car.getVin());
-			ResultSet rs = ps.executeQuery();
+			ps.executeUpdate();
 			//we are executing the query and storing the result set in 
 			//a Resultset
 			ps.execute();

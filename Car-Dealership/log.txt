@@ -518,3 +518,248 @@
 2020-02-25 03:56:47 INFO  RegistrationDriver:163 - Car list saved
 2020-02-25 03:56:49 INFO  RegistrationDriver:50 - taking user input
 2020-02-25 03:56:49 INFO  UserImpl:35 - User inputing information 
+2020-02-25 04:58:08 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 04:58:22 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 04:58:22 INFO  UserImpl:35 - User inputing information 
+2020-02-25 04:58:26 INFO  UserImpl:44 - userjackSuccesfully logged in
+2020-02-25 04:58:26 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 04:58:37 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 04:58:38 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 04:58:38 INFO  RegistrationDriver:154 - User doesn't own anycars.
+2020-02-25 04:58:38 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 04:58:58 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 04:59:11 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 04:59:44 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 04:59:49 INFO  RegistrationDriver:159 - User left customer options.
+2020-02-25 04:59:49 INFO  RegistrationDriver:161 - Users saved
+2020-02-25 04:59:49 INFO  RegistrationDriver:163 - Car list saved
+2020-02-25 04:59:51 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 04:59:54 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 04:59:54 INFO  UserImpl:35 - User inputing information 
+2020-02-25 04:59:56 INFO  UserImpl:44 - userjackSuccesfully logged in
+2020-02-25 05:03:38 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 05:03:50 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 05:03:54 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:03:54 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:03:58 INFO  UserImpl:44 - userbobSuccesfully logged in
+2020-02-25 05:07:30 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 05:07:32 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:07:32 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:07:37 INFO  UserImpl:44 - userbobSuccesfully logged in
+2020-02-25 05:07:58 INFO  RegistrationDriver:279 - User left Employee options.
+2020-02-25 05:07:58 INFO  RegistrationDriver:281 - Users saved
+2020-02-25 05:07:58 INFO  RegistrationDriver:283 - Car list saved
+2020-02-25 05:07:59 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:07:59 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:08:01 INFO  UserImpl:44 - userjackSuccesfully logged in
+2020-02-25 05:08:01 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:08:03 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:08:10 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:11:17 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 05:11:21 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:11:29 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 05:11:32 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:11:46 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:11:46 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:11:51 INFO  UserImpl:47 - user with did not log in successfully
+2020-02-25 05:11:51 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:12:00 INFO  UserImpl:44 - userJohnSuccesfully logged in
+2020-02-25 05:12:00 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:12:13 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:12:30 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:12:42 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:12:45 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 05:12:45 INFO  RegistrationDriver:154 - User doesn't own anycars.
+2020-02-25 05:12:45 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:12:47 INFO  RegistrationDriver:159 - User left customer options.
+2020-02-25 05:12:47 INFO  RegistrationDriver:161 - Users saved
+2020-02-25 05:12:47 INFO  RegistrationDriver:163 - Car list saved
+2020-02-25 05:12:49 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:12:53 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:12:53 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:12:56 INFO  UserImpl:44 - userbobSuccesfully logged in
+2020-02-25 05:13:16 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 05:13:18 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:13:18 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:13:19 INFO  UserImpl:44 - userbobSuccesfully logged in
+2020-02-25 05:14:00 INFO  RegistrationDriver:279 - User left Employee options.
+2020-02-25 05:14:00 INFO  RegistrationDriver:281 - Users saved
+2020-02-25 05:14:00 INFO  RegistrationDriver:283 - Car list saved
+2020-02-25 05:14:01 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:14:01 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:14:07 INFO  UserImpl:44 - userJohnSuccesfully logged in
+2020-02-25 05:14:07 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:14:10 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:14:22 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:14:27 INFO  RegistrationDriver:159 - User left customer options.
+2020-02-25 05:14:27 INFO  RegistrationDriver:161 - Users saved
+2020-02-25 05:14:27 INFO  RegistrationDriver:163 - Car list saved
+2020-02-25 05:14:32 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:14:32 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:14:39 INFO  UserImpl:44 - userbobSuccesfully logged in
+2020-02-25 05:15:01 INFO  RegistrationDriver:238 - accepting offer and setting it to user
+2020-02-25 05:15:01 INFO  RegistrationDriver:242 - updating user information with the car object.
+2020-02-25 05:15:01 INFO  RegistrationDriver:243 - saving user c's state.
+2020-02-25 05:15:26 INFO  RegistrationDriver:279 - User left Employee options.
+2020-02-25 05:15:26 INFO  RegistrationDriver:281 - Users saved
+2020-02-25 05:15:26 INFO  RegistrationDriver:283 - Car list saved
+2020-02-25 05:15:29 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 05:15:29 INFO  UserImpl:35 - User inputing information 
+2020-02-25 05:15:53 INFO  UserImpl:44 - userJohnSuccesfully logged in
+2020-02-25 05:15:53 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:15:55 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 05:15:55 INFO  RegistrationDriver:127 - User has at least one car to choose from
+2020-02-25 05:16:23 INFO  RegistrationDriver:148 - user finished making a payment
+2020-02-25 05:16:23 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 05:16:33 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 05:16:33 INFO  RegistrationDriver:127 - User has at least one car to choose from
+2020-02-25 05:16:56 INFO  RegistrationDriver:148 - user finished making a payment
+2020-02-25 05:16:56 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:41:24 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 08:41:28 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 08:41:53 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 08:42:07 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 08:42:07 INFO  UserImpl:35 - User inputing information 
+2020-02-25 08:42:09 INFO  UserImpl:44 - userbossSuccesfully logged in
+2020-02-25 08:44:40 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 08:44:44 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 08:44:44 INFO  UserImpl:35 - User inputing information 
+2020-02-25 08:44:48 INFO  UserImpl:44 - userbossSuccesfully logged in
+2020-02-25 08:45:17 INFO  RegistrationDriver:279 - User left Employee options.
+2020-02-25 08:45:17 INFO  RegistrationDriver:281 - Users saved
+2020-02-25 08:45:17 INFO  RegistrationDriver:283 - Car list saved
+2020-02-25 08:45:19 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 08:45:19 INFO  UserImpl:35 - User inputing information 
+2020-02-25 08:45:27 INFO  UserImpl:44 - userJaneSuccesfully logged in
+2020-02-25 08:45:27 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:45:30 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:45:40 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:45:49 INFO  RegistrationDriver:159 - User left customer options.
+2020-02-25 08:45:49 INFO  RegistrationDriver:161 - Users saved
+2020-02-25 08:45:49 INFO  RegistrationDriver:163 - Car list saved
+2020-02-25 08:45:53 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 08:45:53 INFO  UserImpl:35 - User inputing information 
+2020-02-25 08:46:00 INFO  UserImpl:44 - userbossSuccesfully logged in
+2020-02-25 08:46:20 INFO  RegistrationDriver:238 - accepting offer and setting it to user
+2020-02-25 08:46:20 INFO  RegistrationDriver:242 - updating user information with the car object.
+2020-02-25 08:46:20 INFO  RegistrationDriver:243 - saving user c's state.
+2020-02-25 08:48:31 INFO  RegistrationDriver:279 - User left Employee options.
+2020-02-25 08:48:31 INFO  RegistrationDriver:281 - Users saved
+2020-02-25 08:48:31 INFO  RegistrationDriver:283 - Car list saved
+2020-02-25 08:48:33 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 08:48:33 INFO  UserImpl:35 - User inputing information 
+2020-02-25 08:48:39 INFO  UserImpl:44 - userJaneSuccesfully logged in
+2020-02-25 08:48:39 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:48:45 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 08:48:45 INFO  RegistrationDriver:127 - User has at least one car to choose from
+2020-02-25 08:49:03 INFO  RegistrationDriver:148 - user finished making a payment
+2020-02-25 08:49:03 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:49:05 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 08:49:05 INFO  RegistrationDriver:127 - User has at least one car to choose from
+2020-02-25 08:49:27 INFO  RegistrationDriver:148 - user finished making a payment
+2020-02-25 08:49:27 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:49:36 INFO  RegistrationDriver:159 - User left customer options.
+2020-02-25 08:49:36 INFO  RegistrationDriver:161 - Users saved
+2020-02-25 08:49:36 INFO  RegistrationDriver:163 - Car list saved
+2020-02-25 08:49:41 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 08:49:41 INFO  UserImpl:35 - User inputing information 
+2020-02-25 08:49:45 INFO  UserImpl:44 - userJaneSuccesfully logged in
+2020-02-25 08:49:45 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:49:47 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 08:49:47 INFO  RegistrationDriver:127 - User has at least one car to choose from
+2020-02-25 08:50:03 INFO  RegistrationDriver:148 - user finished making a payment
+2020-02-25 08:50:03 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 08:52:02 INFO  RegistrationDriver:159 - User left customer options.
+2020-02-25 08:52:02 INFO  RegistrationDriver:161 - Users saved
+2020-02-25 08:52:02 INFO  RegistrationDriver:163 - Car list saved
+2020-02-25 09:42:42 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 09:42:46 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 09:42:46 INFO  UserImpl:35 - User inputing information 
+2020-02-25 09:42:53 INFO  UserImpl:47 - user with did not log in successfully
+2020-02-25 09:42:53 INFO  UserImpl:35 - User inputing information 
+2020-02-25 09:43:05 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 09:43:08 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 09:43:25 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 09:43:37 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 09:43:37 INFO  UserImpl:35 - User inputing information 
+2020-02-25 09:43:40 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 09:44:29 INFO  RegistrationDriver:279 - User left Employee options.
+2020-02-25 09:44:29 INFO  RegistrationDriver:281 - Users saved
+2020-02-25 09:44:29 INFO  RegistrationDriver:283 - Car list saved
+2020-02-25 09:44:32 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 09:44:32 INFO  UserImpl:35 - User inputing information 
+2020-02-25 09:44:41 INFO  UserImpl:44 - userbobSuccesfully logged in
+2020-02-25 09:44:41 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 09:45:18 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 09:46:00 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 09:46:04 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 09:46:04 INFO  RegistrationDriver:154 - User doesn't own anycars.
+2020-02-25 09:46:04 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 09:46:07 INFO  RegistrationDriver:159 - User left customer options.
+2020-02-25 09:46:07 INFO  RegistrationDriver:161 - Users saved
+2020-02-25 09:46:07 INFO  RegistrationDriver:163 - Car list saved
+2020-02-25 09:46:14 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 09:46:14 INFO  UserImpl:35 - User inputing information 
+2020-02-25 09:46:17 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 09:46:42 INFO  RegistrationDriver:238 - accepting offer and setting it to user
+2020-02-25 09:46:42 INFO  RegistrationDriver:242 - updating user information with the car object.
+2020-02-25 09:46:42 INFO  RegistrationDriver:243 - saving user c's state.
+2020-02-25 09:47:16 INFO  RegistrationDriver:279 - User left Employee options.
+2020-02-25 09:47:16 INFO  RegistrationDriver:281 - Users saved
+2020-02-25 09:47:16 INFO  RegistrationDriver:283 - Car list saved
+2020-02-25 09:47:26 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 09:47:26 INFO  UserImpl:35 - User inputing information 
+2020-02-25 09:47:50 INFO  UserImpl:44 - userbobSuccesfully logged in
+2020-02-25 09:47:50 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 09:48:07 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 09:48:07 INFO  RegistrationDriver:127 - User has at least one car to choose from
+2020-02-25 09:48:26 INFO  RegistrationDriver:148 - user finished making a payment
+2020-02-25 09:48:26 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 09:48:36 INFO  RegistrationDriver:123 - User trying to view cars in garage
+2020-02-25 09:48:36 INFO  RegistrationDriver:127 - User has at least one car to choose from
+2020-02-25 09:48:49 INFO  RegistrationDriver:148 - user finished making a payment
+2020-02-25 09:48:49 INFO  RegistrationDriver:67 - Enter while loop of the customer user interface.
+2020-02-25 09:48:51 INFO  RegistrationDriver:159 - User left customer options.
+2020-02-25 09:48:51 INFO  RegistrationDriver:161 - Users saved
+2020-02-25 09:48:51 INFO  RegistrationDriver:163 - Car list saved
+2020-02-25 11:43:20 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 11:43:22 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 11:43:22 INFO  UserImpl:35 - User inputing information 
+2020-02-25 11:43:54 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 11:49:00 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 11:49:08 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 11:49:08 INFO  UserImpl:35 - User inputing information 
+2020-02-25 11:49:16 INFO  UserImpl:47 - user with did not log in successfully
+2020-02-25 11:49:16 INFO  UserImpl:35 - User inputing information 
+2020-02-25 11:49:20 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 12:08:13 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 12:08:17 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 12:08:17 INFO  UserImpl:35 - User inputing information 
+2020-02-25 12:08:33 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 12:19:24 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 12:19:26 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 12:19:26 INFO  UserImpl:35 - User inputing information 
+2020-02-25 12:19:40 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 12:21:17 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 12:21:21 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 12:21:21 INFO  UserImpl:35 - User inputing information 
+2020-02-25 12:21:30 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 12:23:40 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 12:23:44 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 12:23:44 INFO  UserImpl:35 - User inputing information 
+2020-02-25 12:23:47 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 12:25:35 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 12:25:37 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 12:25:37 INFO  UserImpl:35 - User inputing information 
+2020-02-25 12:25:41 INFO  UserImpl:47 - user with did not log in successfully
+2020-02-25 12:25:41 INFO  UserImpl:35 - User inputing information 
+2020-02-25 12:25:45 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 12:30:44 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 12:30:46 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 12:31:07 INFO  RegistrationDriver:32 - Object lists created
+2020-02-25 12:31:09 INFO  RegistrationDriver:50 - taking user input
+2020-02-25 12:31:09 INFO  UserImpl:35 - User inputing information 
+2020-02-25 12:31:11 INFO  UserImpl:44 - userjamesSuccesfully logged in
+2020-02-25 12:31:56 INFO  RegistrationDriver:279 - User left Employee options.
+2020-02-25 12:31:56 INFO  RegistrationDriver:281 - Users saved
+2020-02-25 12:31:56 INFO  RegistrationDriver:283 - Car list saved

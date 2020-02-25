@@ -86,13 +86,13 @@ public class User implements Serializable {
 	}
 
 
-	public int getId(Car car) {
-		return car.getId();
+	public String getVin(Car car) {
+		return car.getVin();
 	}
-	public Car getCarById(int id) {
+	public Car getCarByVin(String vin) {
 		Car tempCar = new Car();
 		for(int i=0; i<car.size();i++) {
-			if(car.get(i).getId()==id) {
+			if(car.get(i).getVin().matches(vin)) {
 				tempCar = car.get(i);
 			}
 		}return tempCar;

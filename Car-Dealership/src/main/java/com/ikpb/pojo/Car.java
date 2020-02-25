@@ -32,7 +32,7 @@ public class Car implements Serializable{
 	private double starterBalance;
 	private boolean isCarAvaliable;
 	private String owner;
-	public Map<User, Double> offers = new HashMap<User,Double>();//make a list of customer objects in 
+	public Map<String, Double> offers = new HashMap<String,Double>();//make a list of customer objects in 
 	
 	public List<Double> getCarPaymentsMade() {
 		System.out.println(this.payments_);
@@ -51,7 +51,7 @@ public class Car implements Serializable{
 
 
 	public double getPayment() {
-		return payment;
+		return Math.round(payment);
 	}
 
 	public void setPayment(double acceptedOffer) {
@@ -90,38 +90,38 @@ public class Car implements Serializable{
 		setStarterBalance(paymentmade);
 		return paymentmade;
 	}
-	public Map<User, Double> getOffers() {
+	public Map<String, Double> getOffers() {
 		return offers;
 	}
 
-	public void setOffers(Map<User, Double> offers) {
+	public void setOffers(Map<String, Double> offers) {
 		this.offers = offers;
 	}
-	public void addOffer(User email, Double offer) {
+	public void addOffer(String email, Double offer) {
 		this.offers.put(email, offer);
 	}
 	public void clearOffers() {
 		this.offers.clear();
 	}
-	public Double getValueFromOffers(Map<User, Double> offer, String user) {
+	public Double getValueFromOffers(Map<String, Double> offer, String user) {
 		double tempDouble = 0;
-	for (Map.Entry<User, Double> entry : offers.entrySet()) {
-			User key=entry.getKey();
+	for (Map.Entry<String, Double> entry : offers.entrySet()) {
+			String key=entry.getKey();
 			
-		if (key.getFirstName().contains(user)) {
+		if (key.equals(user)) {
 				tempDouble= entry.getValue();
 			}
 		}
 		return tempDouble;
 	}
-	public User getKeyFromOffer(Map<User, Double> offer, Double value) {
-			User tempUser = new User();
-		for (Map.Entry<User, Double> entry : offers.entrySet()) {
+	public String getKeyFromOffer(Map<String, Double> offer, Double value) {
+			String tempEmail = "";
+		for (Map.Entry<String, Double> entry : offers.entrySet()) {
 				if (value.equals(entry.getValue())) {
-					tempUser= entry.getKey();
+					tempEmail= entry.getKey();
 				}
 			}
-			return tempUser;
+			return tempEmail;
 		}
 	
 	

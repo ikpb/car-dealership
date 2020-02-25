@@ -1,9 +1,0 @@
-package com.ikpb.driver;
-import com.ikpb.register.*;
-
-public class RegistrationDriver {
-	public static void main(String[] args) {
-		 RegisterUser newUser = new RegisterUser();
-		 newUser.RegisterUsering();
-	 }
-}

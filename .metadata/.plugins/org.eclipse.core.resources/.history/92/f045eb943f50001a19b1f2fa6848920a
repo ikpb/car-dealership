@@ -1,9 +1,0 @@
-package com.ikpb.pojo;
-
-public class Persons {
-private String firstName;
-private String lastName;
-private int age;
-private String email;
-private password;
-}

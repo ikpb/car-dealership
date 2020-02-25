@@ -7,17 +7,19 @@ public class MainDriver {
 
 	public static void main(String[] args) {
 		PetDaoImpl petDaoImpl = new PetDaoImpl();
-		Pet petOne = new Pet("Siri", "The Doggo");
+//		Pet petOne = new Pet("Siri", "The Doggo");
 		Pet petTwo = new Pet("Zed","The Cat");
-//		Pet petThree = new Pet("bobby", "The Fox");
+		Pet petThree = new Pet("bobby", "The Fox");
 		
-//		petDaoImpl.insertPet(petOne);
+		
+		
+		petDaoImpl.insertPet(petTwo);
 //		petDaoImpl.insertPet(petTwo);
-		System.out.println(petDaoImpl.selectPetByName("Siri"));
+//		System.out.println(petDaoImpl.selectPetByName("Siri"));
 
 //		//to update pet
-		petOne.setType("The Pupper");
-		petDaoImpl.updatePet(petOne);
+//		petOne.setType("The Pupper");
+//		petDaoImpl.updatePet(petOne);
 //		
 //		System.out.println(petDaoImpl.selectAllPets());
 //		petDaoImpl.deletePet(petThree);

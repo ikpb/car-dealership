@@ -18,19 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.model.Pet;
+import com.example.util.ConnectionFactory;
 
 public class PetDaoImpl implements PetDao {
 	//There should be system variables once connected to AWS:RDS
 	//Note: STS will not have accesss to new environment variables until
 	//you restart it
-	private static String url ="jdbc:postgresql://localhost:5000/postgres";
-	//jdbc:postgresql://host:port/database_name
-	private static String username="postgres";
-	private static String password="root";
+//	private static String url ="jdbc:postgresql://localhost:5000/postgres";
+//	//jdbc:postgresql://host:port/database_name
+//	private static String username="postgres";
+//	private static String password="root";
 
 	public void insertPet(Pet p) {
-		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+		try{//"jdbc:postgresql://"+url+":5000/postgres?"
+			Connection conn = ConnectionFactory.getConnection();
 			//puttingn in a native sql query utilizing a perpared statemtn
 			PreparedStatement ps = conn.prepareStatement("Insert INTO Pets VALUES(?,?)");
 			ps.setString(1,p.getName());
@@ -53,7 +54,7 @@ public class PetDaoImpl implements PetDao {
 	public Pet selectPetByName(String name) {
 		Pet pet = null;
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn =  ConnectionFactory.getConnection();
 			//puttingn in a native sql query utilizing a perpared statemnt
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Pets WHERE name=?");
 			ps.setString(1, name);
@@ -78,7 +79,7 @@ public class PetDaoImpl implements PetDao {
 	public List<Pet> selectAllPets() {
 		List<Pet> pets = new ArrayList<Pet>();
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn =  ConnectionFactory.getConnection();
 			//putting in a native sql query utilizing a perpared statemnt
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Pets");
 			ResultSet rs = ps.executeQuery();
@@ -99,7 +100,7 @@ public class PetDaoImpl implements PetDao {
 
 	public void updatePet(Pet p) {
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn =  ConnectionFactory.getConnection();
 			//putting in a native sql query utilizing a perpared statemnt
 			PreparedStatement ps = conn.prepareStatement("UPDATE Pets SET type=? WHERE name=?");
 			ps.setString(1, p.getType());
@@ -120,7 +121,7 @@ public class PetDaoImpl implements PetDao {
 
 	public void deletePet(Pet p) {
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn = ConnectionFactory.getConnection();
 			//putting in a native sql query utilizing a perpared statemnt
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM Pets WHERE name=?");
 			ps.setString(1, p.getName());

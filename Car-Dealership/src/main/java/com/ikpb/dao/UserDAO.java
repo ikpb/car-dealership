@@ -7,7 +7,7 @@ public interface UserDAO {
 	List<User> getAllUsers();
 	public List<User> getUserList();
 	public User getUserProgram(User user);
-	public User getUserDB(User user);
+	public User getUserDB(String email);
 	public void addUser();
 	public void updateUser(User user);
 	public void deleteUser(User user);

@@ -4,15 +4,17 @@ import com.ikpb.dao.UserDAO;
 import com.ikpb.pojo.Car;
 import com.ikpb.pojo.User;
 import com.ikpb.pojo.User.UserType;
+import com.ikpb.util.ConnectionFactory;
+
 import java.util.logging.LogManager;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.Logger;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+//import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//import java.io.ObjectInputStream;
+//import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,12 +25,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-public class UserImpl implements UserDAO{
+public class UserImpl extends User implements UserDAO {
 	private static final Logger logger = Logger.getLogger(UserImpl.class);
-	private static String url ="jdbc:postgresql://localhost:5000/dealership";
+//	private static String url ="jdbc:postgresql://localhost:5000/dealership";
 	//jdbc:postgresql://host:port/database_name
-	private static String username="postgres";
-	private static String password="root";
+//	private static String username="postgres";
+//	private static String password="root";
 	List<User> users = new ArrayList<User>();
 //	public UserImpl() {
 //		super();
@@ -47,7 +49,7 @@ public class UserImpl implements UserDAO{
 	public List<User> getAllUsers() {
 		List <User> tempListUsers = new ArrayList<User>();
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn = ConnectionFactory.getConnection();
 			//putting in a native sql query utilizing a perpared statemnt
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM appuser");
 			ResultSet rs = ps.executeQuery();
@@ -99,7 +101,7 @@ public class UserImpl implements UserDAO{
 		//while adding the user to the database we will also add the list
 		users.add(new User(firstName, lastName,email,passwords,b));
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn = ConnectionFactory.getConnection();
 			//puttingn in a native sql query utilizing a perpared statemtn
 			PreparedStatement ps = conn.prepareStatement("Insert INTO appuser VALUES(?,?,?,?,?)");
 			ps.setString(1,firstName);
@@ -130,7 +132,7 @@ public class UserImpl implements UserDAO{
 	@Override
 	public void updateUser(User u) {
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn = ConnectionFactory.getConnection();
 			//putting in a native sql query utilizing a perpared statemnt
 			PreparedStatement ps = conn.prepareStatement("UPDATE appuser SET firstname=?, lastname=?,password=?, usertype=? WHERE email=?");
 			ps.setString(1, u.getFirstName());
@@ -166,18 +168,18 @@ public class UserImpl implements UserDAO{
 	}
 	///////retrieve a user from the database
 	///////////////////
-	public User getUserDB(User user) {
+	public User getUserDB(String email) {
 		User tempUser = null;
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn = ConnectionFactory.getConnection();
 			//putting in a native sql query utilizing a perpared statemnt
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM appuser WHERE email=?");
-			ps.setString(1, user.getEmail());
+			ps.setString(1, email);
 			ResultSet rs = ps.executeQuery();
 			//we are executing the query and storing the result set in 
 			//a Resultset
 			while(rs.next()) {
-				tempUser = new User(rs.getString("firstname"), rs.getString("lastname"),rs.getString("email"),rs.getString("password"), (UserType)rs.getObject("usertype"));
+				tempUser = new User(rs.getString("firstname"), rs.getString("lastname"),rs.getString("email"),rs.getString("password"), User.UserType.valueOf(rs.getString("usertype")));
 			}
 			ps.execute();
 			//allows us to execute a query without a result
@@ -209,8 +211,8 @@ public class UserImpl implements UserDAO{
 	@Override
 	public void deleteUser(User user) {
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
-			//putting in a native sql query utilizing a perpared statemnt
+			Connection conn = ConnectionFactory.getConnection();
+			//putting in a native sql query utilizing a prepared statement
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM appuser WHERE email=?");
 			ps.setString(1, user.getEmail());
 			ps.executeUpdate();
@@ -222,4 +224,5 @@ public class UserImpl implements UserDAO{
 	}
 
 }
+
 }

@@ -22,14 +22,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import com.ikpb.util.ConnectionFactory;
 public class CarImpl implements CarDao{
 	
 	private static final Logger logger = Logger.getLogger(CarImpl.class);
-	private static String url ="jdbc:postgresql://localhost:5000/dealership";
+//	private static String url ="jdbc:postgresql://localhost:5000/dealership";
 	//jdbc:postgresql://host:port/database_name
-	private static String username="postgres";
-	private static String password="root";
-	List<Car> cars = new ArrayList<Car>();
+//	private static String username="postgres";
+//	private static String password="root";
+	public static List<Car> cars = new ArrayList<Car>();
 	public CarImpl() {
 		super();
 		
@@ -50,7 +51,7 @@ public class CarImpl implements CarDao{
 
 		List <Car> tempCarList = new ArrayList<Car>();
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn = ConnectionFactory.getConnection();
 			//putting in a native sql query utilizing a perpared statemnt
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM car");
 			ResultSet rs = ps.executeQuery();
@@ -66,14 +67,66 @@ public class CarImpl implements CarDao{
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}return tempCarList;
+		}cars = tempCarList;
+		return tempCarList;
+	}
+	public List<Car> getAvaliableCarsListInitial() {
+
+		List <Car> tempCarList = new ArrayList<Car>();
+		try{
+			Connection conn = ConnectionFactory.getConnection();
+			//putting in a native sql query utilizing a perpared statemnt
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM car where owner is NULL");
+			//ps.setString(1,"NULL");
+			ResultSet rs = ps.executeQuery();
+			//we are executing the query and storing the result set in 
+			//a Resultset
+			while(rs.next()) {
+				tempCarList.add(new Car(rs.getString("vin"), rs.getString("make"),rs.getString("model"),rs.getInt("year"), rs.getInt("price"),rs.getBoolean("isavaliable")));
+			}
+			
+			ps.execute();
+			//allows us to execute a query without a result
+			conn.close();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tempCarList;
 	}
 
 	public List<Car> getCarsList(){
 		return cars;
 	}
+	public List<Car> getMyCarsList(User user){
+		List<Car> carz = new ArrayList<Car>();
+			try{
+				Connection conn =  ConnectionFactory.getConnection();
+				//putting in a native sql query utilizing a prepared statement
+				PreparedStatement ps = conn.prepareStatement("Select * from car where owner=?");
+				ps.setString(1, user.getEmail());
+				ResultSet rs = ps.executeQuery();
+				//we are executing the query and storing the result set in 
+				//a Resultset
+				while(rs.next()) {
+					
+					carz.add(new Car(rs.getString("vin"),rs.getString("make"),rs.getString("model"),rs.getInt("year"), rs.getDouble("price"),rs.getBoolean("isavaliable")));
+				
+				}
+				ps.execute();
+				//allows us to execute a query without a result
+				conn.close();
+			} 
+			catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}return carz;
+	}
 	public void printCarsList(){
-		for (Car x: cars) {
+		
+		List<Car> tempList = new ArrayList<Car>();
+		tempList = getAvaliableCarsListInitial();
+		for (Car x: tempList) {
 			System.out.println(x);
 		}
 	}
@@ -89,14 +142,14 @@ public class CarImpl implements CarDao{
 		System.out.println("Enter the year of the Car: ");
 		int year = scan.nextInt();
 		System.out.println("Enter the cost of the Car: ");
-		double cost = scan.nextInt();
+		double cost = scan.nextDouble();
 		scan.nextLine();
 		Car car = new Car(vin,make,model,year,cost,true);
 		cars.add(car);
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn = ConnectionFactory.getConnection();
 			//puttingn in a native sql query utilizing a perpared statemtn
-			PreparedStatement ps = conn.prepareStatement("Insert INTO car VALUES(?,?,?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("Insert INTO car VALUES(?,?,?,?,?,?,?)");
 			ps.setString(1,vin);
 			//seting the first question mark to be the name that is passed as
 			//paramenter, that belongs to our user object
@@ -109,10 +162,13 @@ public class CarImpl implements CarDao{
 			ps.setInt(4,year);
 			//setting the fouth question mark to be the type that belongs
 			//to our user object
-			ps.setString(5,"Dealearship");
+			ps.setDouble(5,cost);
 			//setting the fifth question mark to be the type that belongs
 			//to our user object
-			ps.setBoolean(6, true);
+			ps.setString(6,null);
+			//setting the fifth question mark to be the type that belongs
+			//to our user object
+			ps.setBoolean(7, true);
 			//setting the sixth question mark to be the type that belongs
 			//to our user object
 			ps.execute();
@@ -132,7 +188,7 @@ public class CarImpl implements CarDao{
 				cars.remove(cars.get(i));
 			}
 			try{
-				Connection conn = DriverManager.getConnection(url,username,password);
+				Connection conn = ConnectionFactory.getConnection();
 				//putting in a native sql query utilizing a perpared statemnt
 				PreparedStatement ps = conn.prepareStatement("DELETE FROM car WHERE vin=?");
 				ps.setString(1, vin);
@@ -194,20 +250,18 @@ public class CarImpl implements CarDao{
 //		}
 //	}
 	@Override
-	public void saveCarList(List<Car> Car) {
+	public void saveCarList(List<Car> Car, User user) {
 		
 	}
 	@Override public void updateCar(Car car) {
 		try{
-			Connection conn = DriverManager.getConnection(url,username,password);
+			Connection conn = ConnectionFactory.getConnection();
 			//putting in a native sql query utilizing a perpared statemnt
-			PreparedStatement ps = conn.prepareStatement("UPDATE car SET make=?, model=?,year=?, price=?, owner=? WHERE vin=?");
-			ps.setString(1, car.getMake());
-			ps.setString(2, car.getModel());
-			ps.setInt(3, car.getYear());
-			ps.setObject(4, car.getCost());
-			ps.setObject(5, car.getOwner());
-			ps.setObject(6, car.getVin());
+			PreparedStatement ps = conn.prepareStatement("UPDATE car SET price=?, owner=?, isavaliable=?  WHERE vin=?");
+			ps.setDouble(1, car.getCost());
+			ps.setString(2,  car.getOwner());
+			ps.setBoolean(3, car.isCarAvaliable());
+			ps.setObject(4,  car.getVin());
 			ResultSet rs = ps.executeQuery();
 			//we are executing the query and storing the result set in 
 			//a Resultset

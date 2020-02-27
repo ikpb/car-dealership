@@ -21,8 +21,8 @@ public class BusinessLogic {
 	CarImpl carImpl = new CarImpl();
 	UserImpl users = new UserImpl();
 	UserServiceImpl userserve = new UserServiceImpl();
-	////Allow user to place an offer a database
-	////////////////////////////////////////////
+////Allow user to place an offer a database
+////////////////////////////////////////////
 public String placeOffer(User user, Car car,boolean activity, double d) {
 	String tempString = "";
 	if(car.isCarAvaliable()) {
@@ -45,7 +45,7 @@ public User addCarToUserList(User usez, Car carz, double offer){
 	carz.setOwner(usez.getEmail());
 	carz.setCarAvaliable(false);
 	carz.setCost(offer);
-	carz.clearOffers();
+	this.rejectAlloffers(carz);
 	carz.setPayment(offer);
 	carImpl.updateCar(carz);
 	userserve.createUserGarage(usez.getEmail(), carz);
@@ -161,12 +161,30 @@ catch (SQLException e) {
 ////Get the monthly payment of a car for a user
 ////////////////////////////////////////////////////
 public void printCustomerPaymentList(String email, String vin) {
-	List<Integer> j = new ArrayList<Integer>();
-	j=getCarPaymentList(email,vin);
-	for (Integer x: j) {
-		System.out.println("User Id: "+ email + "made the payment of " + x);
+	try{
+		Connection conn =  ConnectionFactory.getConnection();
+		//putting in a native sql query utilizing a prepared statement
+		PreparedStatement ps = conn.prepareStatement("SELECT distinct totalleft, paymentamount FROM payment WHERE userid=? and carid=? order by totalleft desc");
+		ps.setString(1, email);
+		ps.setString(2, vin);
+		ResultSet rs = ps.executeQuery();
+		//we are executing the query and storing the result set in 
+		//a Resultset
+		while(rs.next()) {
+			System.out.println("Customer :"+ email + " made payment of " + rs.getDouble("paymentamount")+ " on his total amount "+ rs.getDouble("totalleft"));
+		}
+		
+		ps.execute();
+		//allows us to execute a query without a result
+		conn.close();
+	} 
+	catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 }
-}
+////Get a Car that is assigned to a customer by email
+////////////////////////////////////////////////////
 public List<Car> getCustomerCarListByEmail(String email) {
 	List<Car> carz = new ArrayList<Car>();
 	try{
@@ -193,6 +211,8 @@ public List<Car> getCustomerCarListByEmail(String email) {
 	return carz;
 	
 }
+////Prints the list of Cars that are assigned to a customer by email
+///////////////////////////////////////////////////////////////////
 public void printCustomerCarList(String email) {
 	List<Car>a=getCustomerCarListByEmail(email);
 	List<Car> tempList = new ArrayList<Car>();
@@ -256,7 +276,8 @@ public String makeMonthlyPayment(String email, String vin) {
 	} String e = "Your payment was made successfully";
 	return e;
 }
-
+////User get to see what car they own
+////////////////////////////////////////////////////
 public void viewOwnedCars(User usez) {
 //	List<Car> myList = usez.getCarList();
 //	for(Car x: myList) {
@@ -286,41 +307,77 @@ public void viewOwnedCars(User usez) {
 		e.printStackTrace();
 	}
 	}
-
+////Rejects offers on a car after the car as been bought
+////Call stored procedure to change offers on car to false
+////In database
+////////////////////////////////////////////////////////
 public void rejectAlloffers(Car carz) {
 	carz.clearOffers();
+	try{Connection conn =  ConnectionFactory.getConnection();
+		conn.setAutoCommit(false);
+		
+		String sql = "call updateValidOffer(?)";
+		
+		//putting in a native sql query utilizing a prepared statement
+		PreparedStatement call = conn.prepareCall(sql);
+		call.setString(1, carz.getVin());
+		call.executeUpdate();
+		//we are executing the query and storing the result set in 
+		//a Resultset
+		
+		//allows us to execute a query without a result
+		conn.close();
+	} 
+	catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
 	
 }
-public void viewAllOffersOnCar(Car carz) {
-	for (Map.Entry<String, Double> entry : carz.offers.entrySet()) {
-	    System.out.println("Offer User Id:"+entry.getKey().toString() + " placed an offer of " + entry.getValue());
-	;
+////Allow employee to see the offers on a car
+////////////////////////////////////////////////////
+public void viewAllOffersOnCar(String vin) {
+//	for (Map.Entry<String, Double> entry : carz.offers.entrySet()) {
+//	    System.out.println("Offer User Id:"+entry.getKey().toString() + " placed an offer of " + entry.getValue());
+//	;
+//	}
+	try{
+		Connection conn =  ConnectionFactory.getConnection();
+		//putting in a native sql query utilizing a prepared statement
+		PreparedStatement ps = conn.prepareStatement("Select userid, carid, offeramount from offer where carid =?");
+		ps.setString(1, vin);
+		ResultSet rs = ps.executeQuery();
+		//we are executing the query and storing the result set in 
+		//a Resultset
+		while(rs.next()) {
+			System.out.println("User Id: " + rs.getString("userid") + " Car Id: "+ rs.getString("carid") + " Offer Amount: " + rs.getDouble("offeramount"));
+		}
+		
+		ps.execute();
+		//allows us to execute a query without a result
+		conn.close();
+	} 
+	catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
 }
+////Employee gets to accept offer.
+//////////////////////////////////////////////////////
 public User acceptOffer(User firstName,Car carz, double offer )
 {
 	User tempUser = new User();
+	System.out.println(carz);
 	System.out.println("Great! You picked an offer!");
 	tempUser = addCarToUserList(firstName, carz, offer);
 	System.out.println("The car has been placed in " + firstName.getFirstName()+"\'s" + " Garage ");
 
 	return tempUser;
 }
-public void viewAllPayments(List<User> users) {
-	for(int k=0; k<users.size();k++) {
-		
-		for(int j=0; j<users.get(k).getCarList().size();j++) {
-			
-		
-		
-//		for(int j=0; j<users.getCarList().get(k).getCarList().size();k++) {
-//			for(int l = 0;l<users.getCarList().get(k).getCarList().get(j).paymentsMade.size();l++) {
-//				for(int m =0;m<users.getCarList().get(k).getCarList().get(j).paymentsMade.get(l); l++) {
-//					System.out.println(users.getCarList().get(k).getFirstName() + " " + users.getCarList().get(k).getCarList().get(j).paymentsMade.get(l));
-//				}
-			}
-		}
-	}
+
+////Stores the accepted offer into database
+////////////////////////////////////////////////////
 public void storeOfferInDB(String email, String vin, double amount) {
 	try{
 		Connection conn = ConnectionFactory.getConnection();
@@ -338,6 +395,8 @@ public void storeOfferInDB(String email, String vin, double amount) {
 	e.printStackTrace();
 }
 }
+////Grabs and stores offers in a map list from database
+////////////////////////////////////////////////////////
 public Map<String,Double> getOffersFromDB(Car carz) {
 	Map<String,Double> dbOffers = new HashMap<>();
 	try{
@@ -364,7 +423,30 @@ public Map<String,Double> getOffersFromDB(Car carz) {
 		e.printStackTrace();
 	} return dbOffers;
 }
-
+public double getOneOffersFromDB(String vin, String userId) {
+	double tempNum = 0.0;
+	try{
+		Connection conn =  ConnectionFactory.getConnection();
+		//puttingn in a native sql query utilizing a prepared statement
+		PreparedStatement ps = conn.prepareStatement("SELECT offeramount FROM offer WHERE carid=? and userid =?");
+		ps.setString(1, vin);
+		ps.setString(2, userId);
+		ResultSet rs = ps.executeQuery();
+		//we are executing the query and storing the result set in 
+		//a Resultset
+		while(rs.next()) {
+			tempNum=rs.getDouble("offeramount");
+		}
+		
+		ps.execute();
+		//allows us to execute a query without a result
+		conn.close();
+	} 
+	catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} return tempNum;
+}
 }
 
 	

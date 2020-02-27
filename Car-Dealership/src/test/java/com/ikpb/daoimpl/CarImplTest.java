@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,13 +14,12 @@ import org.junit.Test;
 import com.ikpb.pojo.Car;
 
 public class CarImplTest {
-	private static final CarImpl cars = new CarImpl();
+	static List<Car> cars = new ArrayList<Car>();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-	List<Car> testCars = new ArrayList<Car>();
-	testCars.add(new Car("Toyoda", "Matrix", 1999, 1500));
-	testCars.add(new Car("Honda", "Civic", 1999, 1500));
-	
+		
+		cars.add(new Car("123","ford","runner",1996,20000,true));
+		cars.add(new Car("145","honda","civic",2000,1500,true));
 	}
 
 	@AfterClass
@@ -30,7 +28,6 @@ public class CarImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-
 	}
 
 	@After
@@ -38,13 +35,14 @@ public class CarImplTest {
 	}
 
 	@Test
-	public void testGettingACar() {
-		List<Car> testCars = new ArrayList<Car>();
-		testCars.add(new Car("Toyoda", "Matrix", 1999, 1500));
-		testCars.add(new Car("Honda", "Civic", 1999, 1500));
-		assertEquals(new Car("Toyoda", "Matrix", 1999, 1500),cars.getSingleCar(testCars.get(7)));
-
+	public void test() {
+		CarImpl implCar = new CarImpl();
+		List<Car> carz= new ArrayList<Car>();
+		List<Car> actual = implCar.getCarsList(carz);
+		carz.add(new Car("123","ford","runner",1996,20000,true));
+		carz.add(new Car("145","honda","civic",2000,1500,true));
+		List<Car> expected = cars;
+		assertEquals(expected,actual);
 	}
-	
-	
+
 }

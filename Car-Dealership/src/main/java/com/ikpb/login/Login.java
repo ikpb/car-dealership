@@ -37,14 +37,15 @@ public class Login {
 		String email = input.nextLine();
 		System.out.println("Please enter your Password:");
 		String password = input.nextLine();
-		tempUser = uService.loginUser(email, password);
+		tempUser = uService.loginUser(email, password, userType);
 		if (tempUser != null) {
-			System.out.println("Welcom Back :" + tempUser.getFirstName());
+			System.out.println("Welcom Back : " + tempUser.getFirstName().toUpperCase());
 			j=0;
 			logger.info("user" + tempUser.getFirstName() + "Succesfully logged in");
 		}else {
 			System.out.println(" Incorrect username/password. Please try again.");
 			logger.info("user with did not log in successfully");
+			
 			j=1;
 		}
 		

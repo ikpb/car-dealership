@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CarDao {
 	List<Car> getCarsListInitial();
-	public List<Car>getCarsList();
+	public List<Car>getCarsList(List<Car> listOf);
 	public List<Car>getMyCarsList(User user);
 	public void addCar();
 	public void deleteCar(String vin);

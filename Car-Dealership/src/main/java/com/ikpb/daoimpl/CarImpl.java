@@ -95,8 +95,8 @@ public class CarImpl implements CarDao{
 		return tempCarList;
 	}
 
-	public List<Car> getCarsList(){
-		return cars;
+	public List<Car> getCarsList(List<Car> listOf){
+		return listOf;
 	}
 	public List<Car> getMyCarsList(User user){
 		List<Car> carz = new ArrayList<Car>();
@@ -215,11 +215,24 @@ public class CarImpl implements CarDao{
 	}
 	public Car getCarById(String vin) {
 		Car tempCar = new Car();
-		for(int l=0; l<cars.size(); l++) {
-			if(cars.get(l).getVin().matches(vin)) {
-				tempCar = cars.get(l);
+		try{
+			Connection conn = ConnectionFactory.getConnection();
+			//putting in a native sql query utilizing a perpared statemnt
+			PreparedStatement ps = conn.prepareStatement("Select * FROM car WHERE vin=?");
+			ps.setString(1, vin);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				
+				tempCar = new Car(rs.getString("vin"),rs.getString("make"),rs.getString("model"),rs.getInt("year"), rs.getDouble("price"),rs.getBoolean("isavaliable"));
+			
 			}
-		}return tempCar;
+			//allows us to execute a query without a result
+			conn.close();
+	}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		return tempCar;
 	}
 	
 //	@Override

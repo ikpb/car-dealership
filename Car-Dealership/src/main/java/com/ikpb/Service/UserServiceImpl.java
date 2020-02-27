@@ -9,6 +9,7 @@ import com.ikpb.dao.UserDAO;
 import com.ikpb.daoimpl.UserImpl;
 import com.ikpb.pojo.Car;
 import com.ikpb.pojo.User;
+import com.ikpb.pojo.User.UserType;
 import com.ikpb.util.ConnectionFactory;
 
 public class UserServiceImpl implements UserService {
@@ -19,9 +20,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User loginUser(String email, String password) {
+	public User loginUser(String email, String password, UserType usertype) {
 		User u = uDao.getUserDB(email);
-		if(u!=null && u.getPassword().contentEquals(password)) {
+		if(u!=null && u.getPassword().contentEquals(password) && u.getUserType().equals(usertype)) {
 			return u;
 		}
 		return null;

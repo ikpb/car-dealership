@@ -51,13 +51,12 @@ public class RegistrationDriver implements Serializable{
 		if(userOption == 1) {
 			//log in as customer
 			/////////////////////
-			int count=0;
 			UserType a= UserType.NEW_USER;
 			User b = new User();
 			while(a.equals(UserType.NEW_USER)) {
 				b = loggingIn.LoggingIn(UserType.CUSTOMER);
 				a = b.getUserType();
-				++count;
+				
 				userOption = 0;
 			}	
 			
@@ -157,12 +156,8 @@ public class RegistrationDriver implements Serializable{
 				////////////////////////////////////////////////////////////////////
 			}else if(userOption ==4) {
 				logger.info("User left customer options.");
-				////add user save method here;
-				logger.info("Users saved");
-				implCar.saveCarList(implCar.getCarsList(), b);
-				logger.info("Car list saved");
 				userOption =0;
-				TimeUnit.MILLISECONDS.sleep(1500);
+				TimeUnit.MILLISECONDS.sleep(1000);
 				break;
 			}else {
 				System.out.println("Please choose one of the 4 options...");
@@ -202,39 +197,35 @@ public class RegistrationDriver implements Serializable{
 				    logger.info("continue on to retry and enter the correct input for employee options");
 				    continue;
 				}scanner.nextLine();
-			
+				/////Employee show list of cars on lot
+				//////////////////////////////////////////////////
 				if(userOption == 1) {
 					implCar.getAvaliableCarsListInitial();
-					implCar.getCarsList();
 					implCar.printCarsList();
 					userOption = 0;
-					TimeUnit.MILLISECONDS.sleep(2000);
-				}else if(userOption == 2) {
+					TimeUnit.MILLISECONDS.sleep(1500);
+				}
+				/////Employee accept offer
+				//////////////////////////////////////////////////
+				else if(userOption == 2) {
 					implCar.printCarsList();
 					System.out.println("Which car would you like to view the offers on?(By Vin):");
 					String carId;
 					carId = scanner.nextLine();
-					 justBusiness.viewAllOffersOnCar(implCar.getCarById(carId));
+					 justBusiness.viewAllOffersOnCar(carId);
 					 System.out.println("Do you want to accept an offer? (Y/N):");
 					 String usrInput = scanner.nextLine().toLowerCase();
 					 if(usrInput.equals("y")) {
 						 System.out.println("Which offer do you want to accept?(Input User Id)");
-						 String userInput ="";
-						 try{userInput= scanner.nextLine();}
-						 catch(NullPointerException e) {System.out.println(e);}
+						 String userInput = scanner.nextLine();
+//						 try{userInput= scanner.nextLine();}
+//						 catch(NullPointerException e) {System.out.println(e);}
 						 //cycle through list and match the car user input with the user with the same as the offer and pass that user in
-						 Double offerValue =implCar.getCarById(carId).getValueFromOffers(implCar.getCarById(carId).offers,userInput);
-						 //gets users email
-						 String offerPlacer = implCar.getCarById(carId).getKeyFromOffer(implCar.getCarById(carId).offers, offerValue);
-						 //prints users email
-						 System.out.println(offerPlacer);
-						 User c = new User();
-						 UserImpl tempUse = new UserImpl();
-						 c=tempUse.getUserDB(offerPlacer);
-						 System.out.println(c.toString()+ "trying to see if c got all the user attributes from" + offerPlacer + " "+offerValue);
-						 c = justBusiness.acceptOffer( c, implCar.getCarById(carId), offerValue);
 						 
-						 System.out.println(justBusiness.getUserCarCost(c.getEmail(), carId)+ " carpayment");
+						 Double offerValue =justBusiness.getOneOffersFromDB(carId, userInput);
+						 User c = new User();
+						 c= users.getUserDB(userInput);
+						 c = justBusiness.acceptOffer( c, implCar.getCarById(carId), offerValue);
 						 logger.info("accepting offer and setting it to user");
 						 logger.debug("trying to debug and get the accepted offer to persist");
 						 users.updateUserProgram(c);
@@ -244,6 +235,7 @@ public class RegistrationDriver implements Serializable{
 						 //users.saveUSer((List<User>) users);
 					 }
 					userOption = 0;
+					
 					////Employee Option 3 Add a car to the lot
 					////////////////////////////////////////////
 				}else if(userOption == 3) {
@@ -262,7 +254,7 @@ public class RegistrationDriver implements Serializable{
 					/////////////////////////////////////////
 				}else if(userOption ==5) {
 					users.printCustomerList();
-					System.out.println("Which offer do you want to accept?(Input User Id)");
+					System.out.println("Which Customer do you want to view?(Input User Id)");
 					 String userInput= scanner.nextLine();
 					 justBusiness.printCustomerCarList(userInput);
 					 System.out.println("Which car do you want to view payments on?(Input Cars Vin)");
@@ -279,7 +271,6 @@ public class RegistrationDriver implements Serializable{
 					logger.info("User left Employee options.");
 					///add a user save method here
 					logger.info("Users saved");
-					implCar.saveCarList(implCar.getCarsList(), b);
 					logger.info("Car list saved");
 					userOption =0;
 					break;

@@ -224,15 +224,12 @@ public void printCustomerList() {
 	////update a users info without sending into to the database/soft update.
 	/////////////////
 	public void updateUserProgram(User user) {
-		System.out.println(user);
-		System.out.println(user.getCarList()+"inside userimpl");
 		for(int i=0; i<users.size();i++) {
 			if(users.get(i).getEmail().contentEquals(user.getEmail())) {
 				String tempString = users.get(i).getPassword();
 				users.set(i, user);
 				users.get(i).setPassword(tempString);
 				users.get(i).getCarList();
-				System.out.println(users.get(i).getCarList() + "inside userimpl after change over");
 			}
 		}
 	}
